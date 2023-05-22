@@ -35,7 +35,8 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
     public class ConnectionTestTests
     {
         // private string _validWitsmlUri = "http://localhost/Witsml.Web/WitsmlStore.svc";
-        private string _validEtpUri = "ws://localhost/witsml.web/api/etp";
+        private string _validEtpUri = "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp";
+        //"ws://localhost/witsml.web/api/etp";
         private IRuntimeService _runtime;
         private static readonly TestListener test = new TestListener().GetListener();
 
@@ -67,7 +68,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection() { Uri = _validEtpUri, AuthenticationType = AuthenticationTypes.Basic, 
-            Username = "hai.vu3@halliburton.com", Password = "KhongCho!345"};
+            Username = "hai.vu3@halliburton.com", Password = "KhongCho@345"};
 
             test.Info("Check Connection Test");
 
@@ -91,7 +92,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
                 Uri = _validEtpUri,
                 AuthenticationType = AuthenticationTypes.Basic,
                 Username = "hai.vu3@halliburton.com",
-                Password = "KhongCho!345"
+                Password = "KhongCho@345"
             };
 
             test.Info("Check Connect Session Test");
