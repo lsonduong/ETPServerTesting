@@ -34,10 +34,10 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
     [TestClass]
     public class ConnectionTestTests
     {
-        private string _validWitsmlUri = "http://localhost/Witsml.Web/WitsmlStore.svc";
+        // private string _validWitsmlUri = "http://localhost/Witsml.Web/WitsmlStore.svc";
         private string _validEtpUri = "ws://localhost/witsml.web/api/etp";
         private IRuntimeService _runtime;
-        private static TestListener logger = new TestListener().GetLogger();
+        private static readonly TestListener test = new TestListener().GetListener();
 
         public TestContext TestContext { get; set; }
 
@@ -55,30 +55,25 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
         [ClassCleanup]
         public static void TearDown()
         {
-            logger.Flush();
+            test.Flush();
         }
 
         [TestMethod]
         public async Task EtpServer_CanConnect_Valid_Endpoint()
         {
             TestContext.Properties["EtpServerUrl"] = "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp";
-            if (TestContext.Properties.Contains("WitsmlStoreUrl"))
-                _validWitsmlUri = TestContext.Properties["WitsmlStoreUrl"].ToString();
 
-            if (TestContext.Properties.Contains("EtpServerUrl"))
-                _validEtpUri = TestContext.Properties["EtpServerUrl"].ToString();
-
-            logger.CreateTest(TestContext.TestName);
+            test.CreateTest(TestContext.TestName);
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection() { Uri = _validEtpUri, AuthenticationType = AuthenticationTypes.Basic, 
-            Username = "hai.vu3@halliburton.com", Password = "KhongCho!234"};
+            Username = "hai.vu3@halliburton.com", Password = "KhongCho!345"};
 
-            logger.Info("Check Connection Test");
+            test.Info("Check Connection Test");
 
             var result = await etpConnectionTest.CanConnect(connection);
 
-            logger.AssertTrue(result);
+            test.AssertTrue(result);
         }
 
         [TestMethod]
@@ -86,14 +81,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
         {
 
             TestContext.Properties["EtpServerUrl"] = "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp";
-            if (TestContext.Properties.Contains("WitsmlStoreUrl"))
-                _validWitsmlUri = TestContext.Properties["WitsmlStoreUrl"].ToString();
 
-            if (TestContext.Properties.Contains("EtpServerUrl"))
-                _validEtpUri = TestContext.Properties["EtpServerUrl"].ToString();
-
-            logger.CreateTest(TestContext.TestName);
-            logger.Info("");
+            test.CreateTest(TestContext.TestName);
+            test.Info("");
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection()
@@ -101,14 +91,14 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
                 Uri = _validEtpUri,
                 AuthenticationType = AuthenticationTypes.Basic,
                 Username = "hai.vu3@halliburton.com",
-                Password = "KhongCho!234"
+                Password = "KhongCho!345"
             };
 
-            logger.Info("Check Connect Session Test");
+            test.Info("Check Connect Session Test");
 
             var result = await etpConnectionTest.ConnectSession(connection);
 
-            logger.AssertNotEquals(result, "");
+            test.AssertNotEquals(result, "");
         }
     }
 }

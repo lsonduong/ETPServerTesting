@@ -34,7 +34,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
         /**
         * Returns an instance of {@link ExtentReports} object. If it doesn't exist creates a new instance and returns it
         */
-        public TestListener GetLogger()
+        public TestListener GetListener()
         {
             if (_extent == null)
             {
@@ -115,6 +115,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
             }
             catch (AssertFailedException e)
             {
+                Assert.IsTrue(condition);
                 LogFail("Check Failed:" + e);
             }
         }
@@ -132,6 +133,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
             }
             catch (AssertFailedException e)
             {
+                Assert.Equals(objA, objB);
                 LogFail("Check Failed:" + e);
             }
         }
@@ -149,6 +151,25 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
             }
             catch (AssertFailedException e)
             {
+                Assert.AreNotEqual(objA, objB);
+                LogFail("Check Failed:" + e);
+            }
+        }
+
+        /**
+        * This method put assert to report
+        */
+        public void AssertContains(string objA, string objB)
+        {
+            try
+            {
+                StringAssert.Contains(objA, objB);
+                //Assertion to be placed here
+                LogPass("Check Passed");
+            }
+            catch (AssertFailedException e)
+            {
+                StringAssert.Contains(objA, objB);
                 LogFail("Check Failed:" + e);
             }
         }
