@@ -65,6 +65,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             TestContext.Properties["EtpServerUrl"] = "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp";
 
             test.CreateTest(TestContext.TestName);
+            test.Info("Namespace:" + TestContext.FullyQualifiedTestClassName);
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection() { Uri = _validEtpUri, AuthenticationType = AuthenticationTypes.Basic, 
@@ -84,7 +85,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             TestContext.Properties["EtpServerUrl"] = "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp";
 
             test.CreateTest(TestContext.TestName);
-            test.Info("");
+            test.Info("Namespace:" + TestContext.FullyQualifiedTestClassName);
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection()

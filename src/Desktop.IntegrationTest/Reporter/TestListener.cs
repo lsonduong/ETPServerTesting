@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace PDS.WITSMLstudio.Desktop.Reporter
 {
@@ -26,10 +27,10 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
         // or: Directory.GetCurrentDirectory() gives the same result
 
         // This will get the current PROJECT bin directory (ie ../bin/)
-        public static string projectBinPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+        // public static string projectBinPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
 
         // This will get the current PROJECT directory
-        public static string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+        public static string projectPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /**
         * Returns an instance of {@link ExtentReports} object. If it doesn't exist creates a new instance and returns it
