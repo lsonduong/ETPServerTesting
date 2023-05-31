@@ -247,7 +247,8 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
             //var onGetChannelDataChange = HandleAsync<ChannelDataChange>(x => handlerS.OnChannelDataChange += x);
             handlerS.Start();
             var uris = new List<string>();
-            uris.Add(argsChild.Message.Resource.Uri);
+            uris.Add("eml://witsml14/well(b6e41495-8b5f-4a87-927b-eed03cc60e46)");
+            //uris.Add(argsChild.Message.Resource.Uri);
             
             extender.ChannelDescribe(uris);
             
