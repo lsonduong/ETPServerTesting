@@ -526,6 +526,7 @@
     <Compile Include="AssemblyInitializer.cs" />
     <Compile Include="Connections\ConnectionUnitTests.cs" />
     <Compile Include="Connections\ConnectionTestTests.cs" />
+    <Compile Include="IntegrationTestCases\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\EtpBrowser\SettingsViewModelTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\CoreProtocolTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\ETPHelper.cs" />
