@@ -44,7 +44,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
         /// <param name="milliseconds">The timeout, in milliseconds.</param>
         /// <returns>An awaitable task.</returns>
         /// <exception cref="System.TimeoutException">The operation has timed out.</exception>
-        public static async Task<TResult> WaitAsync<TResult>(this Task<TResult> task, int milliseconds = 5000)
+        public static async Task<TResult> WaitAsync<TResult>(this Task<TResult> task, int milliseconds = 10000)
         {
             return await task.WaitAsync(TimeSpan.FromMilliseconds(milliseconds));
         }

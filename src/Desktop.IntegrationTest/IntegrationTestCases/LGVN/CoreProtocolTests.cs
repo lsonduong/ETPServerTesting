@@ -3,7 +3,9 @@ using Caliburn.Micro;
 using Energistics.Etp;
 using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
+using Energistics.Etp.Common.Datatypes.ChannelData;
 using Energistics.Etp.Security;
+using Energistics.Etp.v11.Datatypes.ChannelData;
 using Energistics.Etp.v11.Protocol.ChannelStreaming;
 using Energistics.Etp.v11.Protocol.Core;
 using Energistics.Etp.v11.Protocol.Discovery;
@@ -55,7 +57,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
             return await task.WaitAsync(milliseconds);
         }
 
-        protected async Task<ProtocolEventArgs<T>> HandleAsync<T>(Action<ProtocolEventHandler<T>> action, int milliseconds = 5000)
+        protected async Task<ProtocolEventArgs<T>> HandleAsync<T>(Action<ProtocolEventHandler<T>> action, int milliseconds = 10000)
             where T : ISpecificRecord
         {
             ProtocolEventArgs<T> args = null;
@@ -225,7 +227,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
             var handlerS1 = client.Handler<IChannelStreamingConsumer>();
 
             var onChannelData = HandleAsync<OpenSession>(x => handler.OnOpenSession += x);
-            var onGetRootResourcesResponse = HandleAsync<GetResourcesResponse, string>(x => handlerD.OnGetResourcesResponse += x, 30000);
+            var onGetRootResourcesResponse = HandleAsync<GetResourcesResponse, string>(x => handlerD.OnGetResourcesResponse += x);
 
             var result = await client.OpenAsync();
             var args = await onChannelData.WaitAsync();
@@ -241,7 +243,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
 
             
             var handlerS = client.Handler<IChannelStreamingConsumer>();
-            var onGetChannelMetaData = HandleAsync<ChannelMetadata>(x => handlerS.OnChannelMetadata += x, 50000);
+            var onGetChannelMetaData = HandleAsync<ChannelMetadata>(x => handlerS.OnChannelMetadata += x);
             //var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
             //var onChannelStatus = HandleAsync<ChannelStatusChange>(x => handlerS.OnChannelStatusChange += x);
             //var onGetChannelDataChange = HandleAsync<ChannelDataChange>(x => handlerS.OnChannelDataChange += x);
@@ -251,11 +253,25 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
             //uris.Add(argsChild.Message.Resource.Uri);
             
             extender.ChannelDescribe(uris);
-            
-            //var argsMetadata1 = await onChannelStatus.WaitAsync(60000);
-            var argsMetadata = await onGetChannelMetaData.WaitAsync(milliseconds:70000);
 
-            var a = argsMetadata.Message.Channels;
+            //var argsMetadata1 = await onChannelStatus.WaitAsync(60000);
+            var argsMetadata = await onGetChannelMetaData.WaitAsync();
+            var channels = argsMetadata.Message.Channels;
+
+            var channelStreaming = channels.Where(c => c.ChannelName == "Hole Depth").First();
+
+            var channelInfo = new ChannelStreamingInfo {
+                ChannelId = channelStreaming.ChannelId,
+                StartIndex = new StreamingStartIndex { Item = null },
+                ReceiveChangeNotification = true
+            };
+
+            var listChannels = new List<ChannelStreamingInfo>();
+            listChannels.Add(channelInfo); 
+            var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
+            handlerS.ChannelStreamingStart(listChannels);
+            var channelMetaData = await onGetChannelData.WaitAsync();
+
             //var argsData = await onGetChannelData.WaitAsync();
 
         }
