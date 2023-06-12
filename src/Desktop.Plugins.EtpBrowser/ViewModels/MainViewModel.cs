@@ -459,6 +459,34 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         }
 
         /// <summary>
+        /// Create output folder
+        /// </summary>
+        public static string OutputFilePath()
+        {
+            string outputFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) 
+                + "\\ETPTesting\\inputs" + DateTime.Now.ToString("_MMddyyyy_hhmmtt");
+            System.IO.Directory.CreateDirectory(outputFolder);
+
+            return outputFolder;
+        }
+
+        /// <summary>
+        /// Get output folder
+        /// </summary>
+        public string GetOutputFilePath()
+        {
+            return OutputFilePath();
+        }
+
+        /// <summary>
+        /// Write Connection Info to file
+        /// </summary>
+        public void WriteConnectionInfo()
+        {
+            Model.Connection.serialize(OutputFilePath() + "\\connection.json");
+        }
+
+        /// <summary>
         /// Called when the connection has changed.
         /// </summary>
         /// <param name="reconnect">if set to <c>true</c> automatically reconnect.</param>

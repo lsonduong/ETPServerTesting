@@ -20,9 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PDS.WITSMLstudio.Connections;
 using PDS.WITSMLstudio.Desktop.Core;
 using PDS.WITSMLstudio.Desktop.Core.Models;
@@ -239,6 +242,18 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         public void ServerCapabilities()
         {
             Task.Run(GetServerCapabilities);
+        }
+
+        /// <summary>
+        /// Save Inputs for Connection to File
+        /// </summary>
+        public void SaveInputs()
+        {
+            Model.RequestedProtocols.Clear();
+            Model.RequestedProtocols.AddRange(EtpProtocols.Where(x => x.IsSelected));
+            JsonHelper.WriteToJsonFile(Parent.GetOutputFilePath() + "\\protocols.json",Model.RequestedProtocols, true);
+            Parent.WriteConnectionInfo();
+            MessageBox.Show("Save info successfully to" + Parent.GetOutputFilePath());
         }
 
         /// <summary>

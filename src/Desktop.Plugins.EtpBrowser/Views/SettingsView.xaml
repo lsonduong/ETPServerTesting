@@ -87,6 +87,10 @@
                 <Button x:Name="StopServer" Content="Stop Server" Margin="5,0,0,0" Width="100" />
             </StackPanel>
 
+            <StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="SaveInputs" Content="Save Inputs" Width="70"/>
+            </StackPanel>
+
             <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right"
                         IsEnabled="{Binding Model.Connection.Uri, Converter={StaticResource NullToBooleanConverter}}"
                         Visibility="{Binding Model.IsEtpClient, Converter={StaticResource BooleanToVisibilityConverter}}">

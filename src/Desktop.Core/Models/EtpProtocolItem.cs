@@ -19,6 +19,7 @@
 using System;
 using System.Runtime.Serialization;
 using Caliburn.Micro;
+using Newtonsoft.Json;
 
 namespace PDS.WITSMLstudio.Desktop.Core.Models
 {
@@ -30,6 +31,11 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
     public class EtpProtocolItem : PropertyChangedBase
     {
         private bool _isSelected;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EtpProtocolItem" /> class.
+        /// </summary>
+        public EtpProtocolItem() { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EtpProtocolItem" /> class.
@@ -94,6 +100,17 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
                 _isSelected = value;
                 NotifyOfPropertyChange(() => IsSelected);
             }
+        }
+
+        /// <summary>
+        /// Writes the given object instance to a Json file.
+        /// <para>Object type must have a parameterless constructor.</para>
+        /// <para>Only Public properties and variables will be written to the file. These can be any type though, even other classes.</para>
+        /// <para>If there are public properties/variables that you do not want written to the file, decorate them with the [JsonIgnore] attribute.</para>
+        /// </summary>
+        public void serialize(string filePath)
+        {
+            JsonHelper.WriteToJsonFile(filePath, this, true);
         }
     }
 }
