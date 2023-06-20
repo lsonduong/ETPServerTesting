@@ -530,7 +530,7 @@ namespace PDS.WITSMLstudio.Connections
         /// </summary>
         public void serialize(string filePath)
         {
-            JsonHelper.WriteToJsonFile(filePath, this, true);
+            JsonHelper.WriteToJsonFile(filePath, this);
         }
 
         #region INotifyPropertyChanged Members

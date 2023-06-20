@@ -27,6 +27,14 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
     /// <seealso cref="Caliburn.Micro.PropertyChangedBase" />
     public class ChannelMetadataViewModel : PropertyChangedBase
     {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChannelMetadataViewModel"/> class.
+        /// </summary>
+        public ChannelMetadataViewModel()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ChannelMetadataViewModel"/> class.
         /// </summary>

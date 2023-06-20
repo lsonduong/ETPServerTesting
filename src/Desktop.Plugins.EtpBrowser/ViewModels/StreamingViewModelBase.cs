@@ -180,6 +180,14 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         }
 
         /// <summary>
+        /// Get output folder
+        /// </summary>
+        public string GetOutputFilePath()
+        {
+            return Parent.GetOutputFilePath();
+        }
+
+        /// <summary>
         /// Called when the <see cref="Energistics.Etp.Common.IEtpClient" /> web socket is closed.
         /// </summary>
         public virtual void OnSocketClosed()

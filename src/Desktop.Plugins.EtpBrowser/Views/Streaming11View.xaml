@@ -137,11 +137,12 @@
                              Value="{Binding Model.Streaming.EndTime}" Kind="Utc" ShowButtonSpinner="False" Format="UniversalSortableDateTime" TimeFormat="LongTime" />
 
         <StackPanel Grid.Row="9" Grid.ColumnSpan="3" Margin="5,0,5,5" Orientation="Horizontal">
-            <Button x:Name="Start" Content="Start" IsEnabled="{Binding CanStart}" Margin="0,0,5,0" Width="65" />
-            <Button x:Name="Describe" Content="Describe" IsEnabled="{Binding CanDescribe}" Margin="0,0,5,0" Width="65" />
-            <Button x:Name="StartStreaming" Content="Start Streaming" IsEnabled="{Binding CanStartStreaming}" Margin="0,0,5,0" Width="100" />
-            <Button x:Name="StopStreaming" Content="Stop Streaming" IsEnabled="{Binding CanStopStreaming}" Margin="0,0,5,0" Width="100" />
-            <Button x:Name="RequestRange" Content="Request Range" IsEnabled="{Binding CanRequestRange}" Margin="0,0,5,0" Width="95" />
+            <Button x:Name="Start" Content="Start" IsEnabled="{Binding CanStart}" Margin="0,0,5,0" Width="35" />
+            <Button x:Name="Describe" Content="Describe" IsEnabled="{Binding CanDescribe}" Margin="0,0,5,0" Width="55" />
+            <Button x:Name="StartStreaming" Content="Start Streaming" IsEnabled="{Binding CanStartStreaming}" Margin="0,0,5,0" Width="85" />
+            <Button x:Name="StopStreaming" Content="Stop Streaming" IsEnabled="{Binding CanStopStreaming}" Margin="0,0,5,0" Width="85" />
+            <Button x:Name="RequestRange" Content="Request Range" IsEnabled="{Binding CanRequestRange}" Margin="0,0,5,0" Width="85" />
+            <Button x:Name="SaveInputs" Content="Save Inputs" IsEnabled="{Binding CanRequestRange}" Margin="0,0,5,0" Width="70" />
         </StackPanel>
 
     </Grid>

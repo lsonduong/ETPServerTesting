@@ -22,6 +22,8 @@ using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes.ChannelData;
 using PDS.WITSMLstudio.Framework;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
+using PDS.WITSMLstudio.Desktop.Core.Models;
+using System.Windows;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
 {
@@ -207,6 +209,27 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
                 : Model.Streaming.StartIndex.IndexToScale(GetScale());
 
             return startIndex;
+        }
+
+        /// <summary>
+        /// Save inputted data to file.
+        /// </summary>
+        public void SaveInputs()
+        {
+            string oPath = Parent.GetOutputFilePath();
+
+            Parent.WriteConnectionInfo();
+            JsonHelper.WriteToJsonFile(oPath + "\\protocols.json", Parent.Model.RequestedProtocols, true);
+            JsonHelper.WriteToJsonFile(oPath + "\\uris.json", Model.Streaming.Uris);
+
+            var channels = Channels
+                .Where(c => c.IsChecked)
+                .Select(x => x.Record.ChannelId)
+                .ToArray();
+
+            JsonHelper.WriteToJsonFile(oPath + "\\channels.json", channels);
+
+            MessageBox.Show("Save info successfully to" + oPath);
         }
 
         private object GetStreamingEndValue()
