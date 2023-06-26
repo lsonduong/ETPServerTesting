@@ -32,10 +32,23 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
             return uris_list;
         }
 
-        public static IList<ChannelMetadataRecord> ReadChannels(string jsonpath)
+        public static List<ChannelStreamingInfo> ReadChannels(string jsonpath)
         {
-            List<ChannelMetadataRecord> channels = JsonHelper.ReadFromJsonArray<ChannelMetadataRecord>(jsonpath);
-            return channels;
+            List<long> channels = JsonHelper.ReadFromJsonArray<long>(jsonpath);
+            var listChannels = new List<ChannelStreamingInfo>();
+            foreach (var id in channels)
+            {
+                var channelInfo = new ChannelStreamingInfo
+                {
+                    ChannelId = id,
+                    StartIndex = new StreamingStartIndex { Item = null },
+                    ReceiveChangeNotification = true
+                };
+
+                listChannels.Add(channelInfo);
+            }
+            return listChannels;
+
         }
     }
 }

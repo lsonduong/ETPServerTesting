@@ -233,19 +233,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
 
             //var argsMetadata1 = await onChannelStatus.WaitAsync(60000);
             var argsMetadata = await onGetChannelMetaData.WaitAsync();
-            var channels = JsonFileReader.ReadChannels(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+            var listChannels = JsonFileReader.ReadChannels(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\ETPTesting\\inputs_06202023_0305PM\\channels.json");
-
-            var channelStreaming = channels.Where(c => c.ChannelName == "Hole Depth").First();
-
-            var channelInfo = new ChannelStreamingInfo {
-                ChannelId = channelStreaming.ChannelId,
-                StartIndex = new StreamingStartIndex { Item = null },
-                ReceiveChangeNotification = true
-            };
-
-            var listChannels = new List<ChannelStreamingInfo>();
-            listChannels.Add(channelInfo); 
             var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
             handlerS.ChannelStreamingStart(listChannels);
             var channelMetaData = await onGetChannelData.WaitAsync();
