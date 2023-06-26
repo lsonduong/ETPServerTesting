@@ -530,7 +530,18 @@ namespace PDS.WITSMLstudio.Connections
         /// </summary>
         public void serialize(string filePath)
         {
-            JsonHelper.WriteToJsonFile(filePath, this);
+            Serializer.WriteToJsonFile(filePath, this);
+        }
+
+        /// <summary>
+        /// Read the given object instance from a Json file.
+        /// <para>Object type must have a parameterless constructor.</para>
+        /// <para>Only Public properties and variables will be written to the file. These can be any type though, even other classes.</para>
+        /// <para>If there are public properties/variables that you do not want written to the file, decorate them with the [JsonIgnore] attribute.</para>
+        /// </summary>
+        public Connection deserialize(string filePath)
+        {
+            return Serializer.ReadFromJsonFile<Connection>(filePath);
         }
 
         #region INotifyPropertyChanged Members

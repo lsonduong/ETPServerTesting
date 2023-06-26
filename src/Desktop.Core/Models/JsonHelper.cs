@@ -98,15 +98,44 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         /// <para>Object type must have a parameterless constructor.</para>
         /// </summary>
         /// <typeparam name="T">The type of object to read from the file.</typeparam>
-        /// <param name="jsonContent">The json Content to read the object instance from.</param>
+        /// <param name="filePath">The json Content to read the object instance from.</param>
         /// <returns>Returns a new instance of the object read from the Json file.</returns>
-        public static List<T> ReadFromJsonArray<T>(string jsonContent) where T : new()
+        public static List<T> ReadFromJsonArray<T>(string filePath) where T : new()
         {
-            List<T> list = new List<T>();
-
             TextReader reader = null;
-            var fileContents = reader.ReadToEnd();
-            return JsonConvert.DeserializeObject<List<T>>(fileContents);
+            try
+            {
+                reader = new StreamReader(filePath);
+                var fileContents = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<List<T>>(fileContents);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
+        }
+
+        /// <summary>
+        /// Reads an object instance from an Json array.
+        /// <para>Object type must have a parameterless constructor.</para>
+        /// </summary>
+        /// <param name="filePath">The json Content to read the object instance from.</param>
+        /// <returns>Returns a new instance of the object read from the Json file.</returns>
+        public static string[] ReadFromStringArray(string filePath)
+        {
+            TextReader reader = null;
+            try
+            {
+                reader = new StreamReader(filePath);
+                var fileContents = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<string[]>(fileContents);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
         }
     }
 }
