@@ -5,7 +5,7 @@ using System.IO;
 
 namespace PDS.WITSMLstudio.Desktop.Core.Models
 {
-    internal class JsonHelper
+    internal class Serializer
     {
         /// <summary>
         /// Writes the given object instance to a Json file.

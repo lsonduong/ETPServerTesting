@@ -68,8 +68,10 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             test.Info("Namespace:" + TestContext.FullyQualifiedTestClassName);
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
-            var connection = new Connection() { Uri = _validEtpUri, AuthenticationType = AuthenticationTypes.Basic, 
-            Username = "hai.vu3@halliburton.com", Password = "KhongCho@345"};
+            var connection = new Connection().deserialize(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                + "\\ETPTesting\\inputs_06202023_0305PM\\connection.json");
+            //var connection = new Connection() { Uri = _validEtpUri, AuthenticationType = AuthenticationTypes.Basic, 
+            //Username = "hai.vu3@halliburton.com", Password = "KhongCho@345"};
 
             test.Info("Check Connection Test");
 
@@ -88,13 +90,14 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             test.Info("Namespace:" + TestContext.FullyQualifiedTestClassName);
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
-            var connection = new Connection()
-            {
-                Uri = _validEtpUri,
-                AuthenticationType = AuthenticationTypes.Basic,
-                Username = "hai.vu3@halliburton.com",
-                Password = "KhongCho@345"
-            };
+            var connection = new Connection().deserialize(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                + "\\ETPTesting\\inputs_06202023_0305PM\\connection.json");
+            //{
+            //    Uri = _validEtpUri,
+            //    AuthenticationType = AuthenticationTypes.Basic,
+            //    Username = "hai.vu3@halliburton.com",
+            //    Password = "KhongCho@345"
+            //};
 
             test.Info("Check Connect Session Test");
 

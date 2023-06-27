@@ -126,7 +126,7 @@
     <Compile Include="Connections\Connection.cs" />
     <Compile Include="Connections\ConnectionExtensions.cs" />
     <Compile Include="Connections\ConnectionTypes.cs" />
-    <Compile Include="Connections\JsonHelper.cs" />
+    <Compile Include="Connections\Serializer.cs" />
     <Compile Include="Data\ChangeLogs\DbAuditHistory.cs" />
     <Compile Include="Data\ChangeLogs\DbAuditHistoryList.cs" />
     <Compile Include="Data\Channels\ChannelStreamingContext.cs" />

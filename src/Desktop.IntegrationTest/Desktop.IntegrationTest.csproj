@@ -536,6 +536,10 @@
     <Compile Include="IntegrationTestCases\LGVN\Tests\DiscoveryTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\StreamingTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestBase.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\InputProtocolTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\CoreProtocolTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\ETPHelper.cs" />
+    <Compile Include="IntegrationTestCases\Support\JsonFileReader.cs" />
     <Compile Include="Plugins\WitsmlBrowser\SettingsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugins\WitsmlBrowser\WitsmlBrowserViewModelTests.cs" />
