@@ -1,5 +1,6 @@
 ﻿using Avro.Specific;
 using Caliburn.Micro;
+using Energistics.DataAccess.RESQML210;
 using Energistics.Etp;
 using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
@@ -39,9 +40,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
         protected IEtpExtender extender;
         protected DateTimeOffset _dateReceived;
         protected string _ETPMessage;
-            protected async Task<ProtocolEventArgs<T, TContext>> HandleAsync<T, TContext>(
-            Action<ProtocolEventHandler<T, TContext>> action, int milliseconds = 5000)
-            where T : ISpecificRecord
+        protected async Task<ProtocolEventArgs<T, TContext>> HandleAsync<T, TContext>(
+        Action<ProtocolEventHandler<T, TContext>> action, int milliseconds = 5000)
+        where T : ISpecificRecord
         {
             ProtocolEventArgs<T, TContext> args = null;
             var task = new Task<ProtocolEventArgs<T, TContext>>(() => args);
@@ -203,7 +204,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
 
             var onChannelData = HandleAsync<OpenSession>(x => handler.OnOpenSession += x);
             var onGetRootResourcesResponse = HandleAsync<GetResourcesResponse, string>(x => handlerD.OnGetResourcesResponse += x);
-            
+
             var result = await client.OpenAsync();
             var args = await onChannelData.WaitAsync();
             var message = args.Message;
@@ -241,7 +242,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
             handlerD.GetResources(argsRoot.Message.Resource.Uri);
             var argsChild = await onGetChildResourcesResponse.WaitAsync();
 
-            
+
             var handlerS = client.Handler<IChannelStreamingConsumer>();
             var onGetChannelMetaData = HandleAsync<ChannelMetadata>(x => handlerS.OnChannelMetadata += x);
             //var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
@@ -251,7 +252,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
             var uris = new List<string>();
             uris.Add("eml://witsml14/well(b6e41495-8b5f-4a87-927b-eed03cc60e46)");
             //uris.Add(argsChild.Message.Resource.Uri);
-            
+
             extender.ChannelDescribe(uris);
 
             //var argsMetadata1 = await onChannelStatus.WaitAsync(60000);
@@ -260,20 +261,56 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN
 
             var channelStreaming = channels.Where(c => c.ChannelName == "Hole Depth").First();
 
-            var channelInfo = new ChannelStreamingInfo {
+            var channelInfo = new ChannelStreamingInfo
+            {
                 ChannelId = channelStreaming.ChannelId,
                 StartIndex = new StreamingStartIndex { Item = null },
                 ReceiveChangeNotification = true
             };
 
             var listChannels = new List<ChannelStreamingInfo>();
-            listChannels.Add(channelInfo); 
-            var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
-            handlerS.ChannelStreamingStart(listChannels);
+            listChannels.Add(channelInfo);
+            var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x, 60000);
+            //var onGetChannelData = HandleAsync<ChannelMetadata>(x => handlerS.OnChannelMetadata += x, 60000);
+            //var onGetChannelData = HandleAsync<ChannelStreamingConsumerHandler>(x => handlerS.On += x);
+            //var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
+            client.Register<IChannelStreamingConsumer, ChannelStreamingConsumerHandler>();
+            //client.Register<IChannelRangeInfo>(onChannelData: OnChannelData);
+            //extender.Register
+            //handlerS.ChannelStreamingStart(listChannels);
+            
+
             var channelMetaData = await onGetChannelData.WaitAsync();
+            var channelMetaData2 = await onGetChannelData.WaitAsync();
+            //var channelMetaData = await onGetChannelData.WaitAsync();
 
             //var argsData = await onGetChannelData.WaitAsync();
 
+        }
+
+        protected virtual void OnChannelData(IMessageHeader header, IList<IDataItem> channelData)
+        {
+            if (channelData.Any())
+                return;
+                //LogChannelData(channelData);
+        }
+
+        private object GetStreamingStartValue(bool isRangeRequest = false, string type = "Lastet Value")
+        {
+            if (isRangeRequest && !"Lastet Value".EqualsIgnoreCase(type))
+            //if (isRangeRequest && !"TimeIndex".EqualsIgnoreCase(Model.Streaming.StreamingType) && !"DepthIndex".EqualsIgnoreCase(Model.Streaming.StreamingType))
+                return default(long);
+            if ("LatestValue".EqualsIgnoreCase(type))
+                return null;
+            else if ("IndexCount".EqualsIgnoreCase(type))
+                return 1;
+
+            var isTimeIndex = "TimeIndex".EqualsIgnoreCase(type);
+            var scale = Convert.ToInt64(1 * Math.Pow(10, 3));
+            var startIndex = isTimeIndex ? DateTimeOffset.Now.ToUnixTimeMicroseconds() : scale;
+                //? new DateTimeOffset(Model.Streaming.StartTime).ToUnixTimeMicroseconds()
+
+            return startIndex;
         }
     }
 }

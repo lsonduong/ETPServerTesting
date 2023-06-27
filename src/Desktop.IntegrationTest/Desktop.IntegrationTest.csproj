@@ -528,8 +528,10 @@
     <Compile Include="Connections\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\EtpBrowser\SettingsViewModelTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\ETPTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\CoreProtocolTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\ETPHelper.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\MockChannelStreamingConsumer.cs" />
     <Compile Include="Plugins\WitsmlBrowser\SettingsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugins\WitsmlBrowser\WitsmlBrowserViewModelTests.cs" />
