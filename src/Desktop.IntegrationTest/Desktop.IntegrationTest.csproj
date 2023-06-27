@@ -528,6 +528,14 @@
     <Compile Include="Connections\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\EtpBrowser\SettingsViewModelTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Core\ETPClientConfiguration.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Core\ETPClientManagement.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Helper\AsyncHelper.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Helper\StringHelper.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\ConnectionTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\DiscoveryTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\StreamingTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\TestBase.cs" />
     <Compile Include="IntegrationTestCases\LGVN\InputProtocolTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\CoreProtocolTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\ETPHelper.cs" />
