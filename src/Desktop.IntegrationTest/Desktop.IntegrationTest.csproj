@@ -537,6 +537,7 @@
     <Compile Include="IntegrationTestCases\LGVN\Tests\StreamingTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestBase.cs" />
     <Compile Include="IntegrationTestCases\InputProtocolTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\TC001ValidateTheFunctionalityOfLatestValueForRTLog.cs" />
     <Compile Include="IntegrationTestCases\Support\JsonFileReader.cs" />
     <Compile Include="Plugins\WitsmlBrowser\SettingsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
