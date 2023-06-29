@@ -1,9 +1,13 @@
 ﻿using AventStack.ExtentReports.Utils;
+using Energistics.DataAccess.RESQML210;
+using Energistics.Etp.v12.Datatypes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium.DevTools.V111.CSS;
 using PDS.WITSMLstudio.Desktop.Core;
+using PDS.WITSMLstudio.Framework;
 using SharpCompress.Common;
+using SuperSocket.SocketEngine.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,9 +40,11 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper
                     Console.WriteLine(message);
                 else
                 {
-                    TextWriter writer = null;
-                    writer = new StreamWriter(filePath, false);
-                    writer.WriteLine(message);
+                    var directoryPath = Path.GetDirectoryName(filePath);
+                    if (!System.IO.Directory.Exists(directoryPath))
+                        System.IO.Directory.CreateDirectory(directoryPath);
+
+                    File.AppendAllText(filePath, message + Environment.NewLine);
                 }
             }
             catch (Exception ex)
@@ -62,11 +68,25 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper
             //FormatDataObject(jObject["dataObject"] as JObject);
             //FormatChannelMetadataRecords(jObject["channels"] as JArray);
             //FormatChannelRangeRequests(jObject["channelRanges"] as JArray);
-            //FormatChannelData(jObject["data"] as JArray);
+            var objectData = FormatChannelData(jObject["data"] as JArray);
+            if (objectData != null)
+                jObject["data"] = objectData;
 
             return jObject["protocol"] != null
                 ? jObject.ToString(Formatting.None)
                 : jObject.ToString();
+        }
+
+        private static JObject FormatChannelData(JArray data)
+        {
+            if (data == null || data.Count < 1) return null;
+            var jObject = new JObject();
+
+            jObject.Add("channel-data", data);
+            jObject.Add("received-date", DateTimeHelper.GetCurrentDate());
+            jObject.Add("received-date-offset", DateTimeHelper.GetCurrentDateTimeOffset());
+
+            return jObject;
         }
     }
 }

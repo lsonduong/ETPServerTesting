@@ -531,6 +531,7 @@
     <Compile Include="IntegrationTestCases\LGVN\Core\ETPClientConfiguration.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Core\ETPClientManagement.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Helper\AsyncHelper.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Helper\DateTimeHelper.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Helper\StringHelper.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\ConnectionTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\DiscoveryTests.cs" />
