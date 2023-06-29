@@ -53,7 +53,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
 
         internal void LogClientOutput(string message)
         {
-            StringHelper.LogClientOutput(message, false);
+            string outputLoc = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                + "\\ETPTesting\\outputs" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + "\\response.json";
+            StringHelper.LogClientOutput(message, outputLoc);
         }
 
         protected void OnChannelData(object sender, ProtocolEventArgs<ChannelData> e)

@@ -1,8 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using AventStack.ExtentReports.Utils;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OpenQA.Selenium.DevTools.V111.CSS;
 using PDS.WITSMLstudio.Desktop.Core;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +15,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper
 {
     public static class StringHelper
     {
-        public static void LogClientOutput(string message, bool logDetails)
+        public static void LogClientOutput(string message, string filePath = "")
         {
             if (string.IsNullOrWhiteSpace(message)) return;
-
-            //if (logDetails)
-            //    LogDetailMessage(message);
 
             try
             {
@@ -29,6 +30,15 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper
                     if (index != -1)
                         if (DateTimeOffset.TryParse(message.Substring(index + receivedText.Length).Trim(), out DateTimeOffset _dateReceived))
                             _dateReceived = _dateReceived.ToUniversalTime();
+                }
+
+                if (filePath.IsNullOrEmpty())
+                    Console.WriteLine(message);
+                else
+                {
+                    TextWriter writer = null;
+                    writer = new StreamWriter(filePath, false);
+                    writer.WriteLine(message);
                 }
             }
             catch (Exception ex)
