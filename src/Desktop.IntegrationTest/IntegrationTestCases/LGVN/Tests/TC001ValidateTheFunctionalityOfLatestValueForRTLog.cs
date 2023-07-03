@@ -65,7 +65,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
 
             var a33 = await StreamingChannel(listChannels, count: -1, throwable: false);
 
-            var jsonString = JsonConvert.SerializeObject(a33);
+            var valueOut = a33[0].Value.Item;
+
+            Assert.AreEqual(valueOut.ToString(), "4.76966857910156");
 
             Console.WriteLine("End........");
         }
