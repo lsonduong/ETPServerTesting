@@ -85,9 +85,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             var applicationName = GetType().Assembly.FullName;
             var applicationVersion = GetType().GetAssemblyVersion();
             var requestedProtocol = JsonFileReader.ReadProtocolList(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_06202023_0305PM\\protocols.json");
+                + "\\ETPTesting\\inputs_06202023_0305PM");
             var connection = JsonFileReader.ReadConnection(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_06202023_0305PM\\connection.json");
+                + "\\ETPTesting\\inputs_06202023_0305PM");
             client = connection.CreateEtpClient(applicationName, applicationVersion);
             client.Register<IChannelStreamingConsumer, ChannelStreamingConsumerHandler>();
             client.Register<IDiscoveryCustomer, DiscoveryCustomerHandler>();
@@ -227,7 +227,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             //var onGetChannelDataChange = HandleAsync<ChannelDataChange>(x => handlerS.OnChannelDataChange += x);
             handlerS.Start();
             var uris = JsonFileReader.ReadUris(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_06202023_0305PM\\uris.json");
+                + "\\ETPTesting\\inputs_06202023_0305PM");
             //uris.Add(argsChild.Message.Resource.Uri);
             
             extender.ChannelDescribe(uris);
@@ -236,7 +236,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
             var argsMetadata = await onGetChannelMetaData.WaitAsync();
 
             var listChannels = JsonFileReader.ReadChannels(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_06202023_0305PM\\channels.json");
+                + "\\ETPTesting\\inputs_06202023_0305PM");
             var onGetChannelData = HandleAsync<ChannelData>(x => handlerS.OnChannelData += x);
             handlerS.ChannelStreamingStart(listChannels);
             var channelMetaData = await onGetChannelData.WaitAsync();

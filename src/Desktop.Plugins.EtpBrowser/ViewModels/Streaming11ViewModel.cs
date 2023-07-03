@@ -228,6 +228,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
                 .ToArray();
 
             JsonHelper.WriteToJsonFile(oPath + "\\channels.json", channels);
+            JsonHelper.WriteToJsonFile(oPath + "\\startIndex.json", GetStreamingStartValue(false));
 
             MessageBox.Show("Save info successfully to" + oPath);
         }
