@@ -63,7 +63,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
             List<long> channels = JsonHelper.ReadFromJsonArray<long>(jsonPath + "\\channels.json");
             var listChannels = new List<ChannelStreamingInfo>();
 
-            string startIndex = JsonHelper.ReadFromJsonFile(jsonPath + "\\startIndex.json");
+            string startIndex = JsonHelper.ReadFromJsonFile(jsonPath + "\\startIndex.json").Trim();
 
             object startItem;
 
@@ -94,6 +94,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
 
         }
 
+        /// <summary>
+        /// Compare json object to baseline
+        /// </summary>
         public static bool CompareJsonObjectToFile(string jsonString, string jsonPath)
         {
             string jsonContent = JsonHelper.ReadFromJsonFile(jsonPath);

@@ -533,12 +533,13 @@
     <Compile Include="IntegrationTestCases\LGVN\Helper\AsyncHelper.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Helper\DateTimeHelper.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Helper\StringHelper.cs" />
-    <Compile Include="IntegrationTestCases\LGVN\Tests\ConnectionTests.cs" />
-    <Compile Include="IntegrationTestCases\LGVN\Tests\DiscoveryTests.cs" />
-    <Compile Include="IntegrationTestCases\LGVN\Tests\StreamingTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\ConnectionTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\DiscoveryTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\StreamingTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestBase.cs" />
     <Compile Include="IntegrationTestCases\InputProtocolTests.cs" />
-    <Compile Include="IntegrationTestCases\LGVN\Tests\TC001ValidateTheFunctionalityOfLatestValueForRTLog.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC001ValidateTheFunctionalityOfLatestValueForRTLog.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC002ValidateTheFunctionalityOfIndexCountForRTLog.cs" />
     <Compile Include="IntegrationTestCases\Support\JsonFileReader.cs" />
     <Compile Include="Plugins\WitsmlBrowser\SettingsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

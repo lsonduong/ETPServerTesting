@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
+namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.Sample
 {
     [TestClass]
     public class DiscoveryTests : TestBase
