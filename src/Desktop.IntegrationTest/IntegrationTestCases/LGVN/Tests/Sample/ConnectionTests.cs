@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.Sapmle
+namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.Sample
 {
     [TestClass]
     public class ConnectionTests : TestBase
