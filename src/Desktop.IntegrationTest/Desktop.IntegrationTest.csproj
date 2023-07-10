@@ -535,6 +535,7 @@
     <Compile Include="IntegrationTestCases\LGVN\Helper\StringHelper.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\ConnectionTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\DiscoveryTests.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\RequestRangeTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\Sample\StreamingTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestBase.cs" />
     <Compile Include="IntegrationTestCases\InputProtocolTests.cs" />

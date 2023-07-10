@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.PeerToPeer;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,7 +93,51 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
                 handler.ChannelStreamingStop(listChannels.Select(x => x.ChannelId).ToList());
             }
             if (throwable)
-                throw new TimeoutException($"The operation has timed out111.[{timeOut}]");
+                throw new TimeoutException($"[StreamingChannel] The operation has timed out.[{timeOut}]");
+            return ChannelDataRecords;
+        }
+
+        protected async Task<List<DataItem>> RequestRangeChannel(ChannelMetadataRecord channel, DateTime startTime, DateTime endTime, int timeOut = 30000, bool throwable = true)
+        {
+            return await RequestRangeChannel(channel, new DateTimeOffset(startTime).ToUnixTimeMicroseconds(), new DateTimeOffset(endTime).ToUnixTimeMicroseconds(), timeOut, throwable);
+        }
+
+        protected async Task<List<DataItem>> RequestRangeChannel(ChannelMetadataRecord channel, long startIndex, long endIndex, int timeOut = 30000, bool throwable = true)
+        {
+            var handler = client.Handler<IChannelStreamingConsumer>();
+            handler.OnChannelData += OnChannelData;
+            var channelScale = channel.Indexes.FirstOrDefault()?.Scale ?? 0;
+            var channelRangeInfo = new ChannelRangeInfo
+            {
+                ChannelId = new[] { channel.ChannelId },
+                StartIndex = startIndex,
+                EndIndex = endIndex
+            };
+
+            handler.ChannelRangeRequest(new[] { channelRangeInfo });
+            
+            var tokenSource = new CancellationTokenSource();
+
+            var onGetChannelData = AsyncHelper.HandleAsync<ChannelData>(x => handler.OnChannelData += x);
+            Task taskCount = new Task(() =>
+            {
+                var lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(channelScale) : 0;
+
+                while (lastIndex < endIndex)
+                { 
+                    lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(channelScale) : 0; 
+                }
+            });
+            taskCount.Start();
+
+            var completedTask = await Task.WhenAny(taskCount, Task.Delay(timeOut, tokenSource.Token));
+            if (completedTask == taskCount)
+            {
+                tokenSource.Cancel();
+                handler.ChannelStreamingStop(new[] { channel.ChannelId });
+            }
+            if (throwable)
+                throw new TimeoutException($"[RequestRangeChannel] The operation has timed out111.[{timeOut}]");
             return ChannelDataRecords;
         }
 
