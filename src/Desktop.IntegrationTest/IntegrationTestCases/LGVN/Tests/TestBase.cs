@@ -121,11 +121,11 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             var onGetChannelData = AsyncHelper.HandleAsync<ChannelData>(x => handler.OnChannelData += x);
             Task taskCount = new Task(() =>
             {
-                var lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(channelScale) : 0;
+                var lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.First().IndexFromScale(channelScale) : 0;
 
                 while (lastIndex < endIndex)
                 { 
-                    lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(channelScale) : 0; 
+                    lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.First().IndexFromScale(channelScale) : 0; 
                 }
             });
             taskCount.Start();
@@ -134,11 +134,13 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             if (completedTask == taskCount)
             {
                 tokenSource.Cancel();
-                handler.ChannelStreamingStop(new[] { channel.ChannelId });
             }
+            handler.ChannelStreamingStop(new[] { channel.ChannelId });
             if (throwable)
-                throw new TimeoutException($"[RequestRangeChannel] The operation has timed out111.[{timeOut}]");
-            return ChannelDataRecords;
+                throw new TimeoutException($"[RequestRangeChannel] The operation has timed out.[{timeOut}]");
+            var response = new List<DataItem>(ChannelDataRecords);
+            ChannelDataRecords.Clear();
+            return response;
         }
 
         //private object GetStreamingStartValue(bool isRangeRequest = false, string type = "Lastet Value")
