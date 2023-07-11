@@ -68,7 +68,6 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
         protected void OnChannelMetaData(object sender, ProtocolEventArgs<ChannelMetadata> e)
         {
             Console.WriteLine("Channel Meta Data");
-            var a = e.Message;
         }
 
         protected async Task<List<DataItem>> StreamingChannel(List<ChannelStreamingInfo> listChannels, int count = 1, int timeOut = 30000, bool throwable = true)
@@ -94,7 +93,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             }
             if (throwable)
                 throw new TimeoutException($"[StreamingChannel] The operation has timed out.[{timeOut}]");
-            return ChannelDataRecords;
+            var response = new List<DataItem>(ChannelDataRecords);
+            ChannelDataRecords.Clear();
+            return response;
         }
 
         protected async Task<List<DataItem>> RequestRangeChannel(ChannelMetadataRecord channel, DateTime startTime, DateTime endTime, int timeOut = 30000, bool throwable = true)
