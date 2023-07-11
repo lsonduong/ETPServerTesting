@@ -60,17 +60,43 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.Sample
 
             //======================================================================================================
             // Stream Index Count
-            var channelStreaming = channels.Where(c => c.ChannelName == "Hole Depth").First();
+            //var channelStreaming = channels.Where(c => c.ChannelName == "Hole Depth").First();
+            //var channelInfo = new ChannelStreamingInfo
+            //{
+            //    ChannelId = channelStreaming.ChannelId,
+            //    StartIndex = new StreamingStartIndex { Item = 3 },
+            //    ReceiveChangeNotification = true
+            //};
+
+            //var listChannels = new List<ChannelStreamingInfo>();
+            //listChannels.Add(channelInfo);
+            //var streamResponse = await StreamingChannel(listChannels, count: 3, throwable: false);
+
+            //var jsonObjectRespone = EtpExtensions.Serialize(streamResponse[0], true);
+            //var jsonObjectRespone2 = EtpExtensions.Serialize(streamResponse[0], false);
+
+            //var jsonArrayRespone = EtpExtensions.Serialize(streamResponse, true);
+            //var jsonArrayRespone2 = EtpExtensions.Serialize(streamResponse, false);
+
+            //Console.WriteLine("End........");
+            //======================================================================================================
+
+
+            //======================================================================================================
+            //Stream Depth Index
+            int startInDex = 1;
+            var channelStreaming = channels.Where(c => c.ChannelName == "EWR Deep Resis").First();
+            int channelScale = channelStreaming.Indexes.FirstOrDefault()?.Scale ?? 0;
+            var scale = Convert.ToInt64((startInDex * Math.Pow(10, channelScale)));
             var channelInfo = new ChannelStreamingInfo
             {
                 ChannelId = channelStreaming.ChannelId,
-                StartIndex = new StreamingStartIndex { Item = 3 },
+                StartIndex = new StreamingStartIndex { Item = scale },
                 ReceiveChangeNotification = true
             };
-
             var listChannels = new List<ChannelStreamingInfo>();
             listChannels.Add(channelInfo);
-            var streamResponse = await StreamingChannel(listChannels, count: 3, throwable: false);
+            var streamResponse = await StreamingChannel(listChannels, count: -1, throwable: false);
 
             var jsonObjectRespone = EtpExtensions.Serialize(streamResponse[0], true);
             var jsonObjectRespone2 = EtpExtensions.Serialize(streamResponse[0], false);
@@ -79,20 +105,6 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.Sample
             var jsonArrayRespone2 = EtpExtensions.Serialize(streamResponse, false);
 
             Console.WriteLine("End........");
-            //======================================================================================================
-
-
-            //======================================================================================================
-            // Stream Depth Index
-            //int startInDex = 20223;
-            //int channelScale = channelStreaming.Indexes.FirstOrDefault()?.Scale ?? 0;
-            //var scale = Convert.ToInt64((startInDex * Math.Pow(10, channelScale)));
-            //var channelInfo = new ChannelStreamingInfo
-            //{
-            //    ChannelId = channelStreaming.ChannelId,
-            //    StartIndex = new StreamingStartIndex { Item = scale },
-            //    ReceiveChangeNotification = true
-            //};
             //======================================================================================================
 
             //======================================================================================================

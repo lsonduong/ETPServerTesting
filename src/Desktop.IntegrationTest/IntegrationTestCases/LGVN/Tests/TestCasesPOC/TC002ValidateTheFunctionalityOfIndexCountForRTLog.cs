@@ -21,6 +21,10 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
     [TestClass]
     public class TC002ValidateTheFunctionalityOfIndexCountForRTLog : TestBase
     {
+
+        protected string testFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                + "\\ETPTesting\\inputs_TC002";
+
         [TestMethod]
         [Description("ValidateTheFunctionalityOfIndexCountForRTLog")]
         public async Task ValidateTheFunctionalityOfIndexCountForRTLog()
@@ -41,20 +45,17 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
             handler.Start();
 
             // Describe 
-            var uris = JsonFileReader.ReadUris(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_TC002");
+            var uris = JsonFileReader.ReadUris(testFolder);
 
             handler.ChannelDescribe(uris);
             var argsMetadata = await onGetChannelMetaData.WaitAsync();
 
-            var listChannels = JsonFileReader.ReadChannels(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_TC002");
+            var listChannels = JsonFileReader.ReadChannels(testFolder);
 
-            var a33 = await StreamingChannel(listChannels, count: -1, throwable: false);
+            var message = await StreamingChannel(listChannels, count: -1, throwable: false);
 
-            var a33Json = EtpExtensions.Serialize(a33, true);
-            var result = JsonFileReader.CompareJsonObjectToFile(a33Json, Environment.GetFolderPath
-                (Environment.SpecialFolder.MyDocuments) + "\\ETPTesting\\inputs_TC002\\result.json");
+            var messageJson = EtpExtensions.Serialize(message, true);
+            var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder + "\\result.json");
 
             Assert.IsTrue(result);
 

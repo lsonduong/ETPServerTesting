@@ -19,15 +19,15 @@ using System.Threading.Tasks;
 namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
 {
     [TestClass]
-    public class TC001ValidateTheFunctionalityOfLatestValueForRTLog : TestBase
+    public class TC003ValidateTheFunctionalityOfRequestRangeWhenDepthIndexIsSelectedForRTLog : TestBase
     {
 
         protected string testFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_TC001";
+                + "\\ETPTesting\\inputs_TC003";
 
         [TestMethod]
-        [Description("ValidateTheFunctionalityOfLatestValueForRTLog")]
-        public async Task ValidateTheFunctionalityOfLatestValueForRTLog()
+        [Description("ValidateTheFunctionalityOfRequestRangeWhenDepthIndexIsSelectedForRTLog")]
+        public async Task ValidateTheFunctionalityOfRequestRangeWhenDepthIndexIsSelectedForRTLog()
         {
             client.Register<IChannelStreamingConsumer, ChannelStreamingConsumerHandler>();
             client.Register<IDiscoveryCustomer, DiscoveryCustomerHandler>();
@@ -50,9 +50,12 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
             handler.ChannelDescribe(uris);
             var argsMetadata = await onGetChannelMetaData.WaitAsync();
 
-            var listChannels = JsonFileReader.ReadChannels(testFolder);
+            var listChannelIds = JsonFileReader.ReadChannelIds(testFolder);
+            var scale = JsonFileReader.ReadScale(testFolder);
+            var startIndex = JsonFileReader.ReadStartIndex(testFolder);
+            var endIndex = JsonFileReader.ReadEndIndex(testFolder);
 
-            var message = await StreamingChannel(listChannels, count: -1, throwable: false);
+            var message = await RequestRangeChannel(listChannelIds, scale, startIndex, endIndex, throwable: false);
 
             var messageJson = EtpExtensions.Serialize(message, true);
             var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder + "\\result.json");

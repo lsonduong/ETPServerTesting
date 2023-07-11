@@ -56,7 +56,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
         {
             string outputLoc = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\ETPTesting\\outputs" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + "\\response.json";
-            StringHelper.LogClientOutput(message, outputLoc);
+            StringHelper.LogClientOutput(message);
         }
 
         protected void OnChannelData(object sender, ProtocolEventArgs<ChannelData> e)
@@ -135,6 +135,44 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             {
                 tokenSource.Cancel();
                 handler.ChannelStreamingStop(new[] { channel.ChannelId });
+            }
+            if (throwable)
+                throw new TimeoutException($"[RequestRangeChannel] The operation has timed out111.[{timeOut}]");
+            return ChannelDataRecords;
+        }
+
+        protected async Task<List<DataItem>> RequestRangeChannel(IList<long> channelIds, int scale, long startIndex, long endIndex, int timeOut = 30000, bool throwable = true)
+        {
+            var handler = client.Handler<IChannelStreamingConsumer>();
+            handler.OnChannelData += OnChannelData;
+            var channelRangeInfo = new ChannelRangeInfo
+            {
+                ChannelId = channelIds,
+                StartIndex = startIndex,
+                EndIndex = endIndex
+            };
+
+            handler.ChannelRangeRequest(new[] { channelRangeInfo });
+
+            var tokenSource = new CancellationTokenSource();
+
+            var onGetChannelData = AsyncHelper.HandleAsync<ChannelData>(x => handler.OnChannelData += x);
+            Task taskCount = new Task(() =>
+            {
+                var lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(scale) : 0;
+
+                while (lastIndex < endIndex)
+                {
+                    lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(scale) : 0;
+                }
+            });
+            taskCount.Start();
+
+            var completedTask = await Task.WhenAny(taskCount, Task.Delay(timeOut, tokenSource.Token));
+            if (completedTask == taskCount)
+            {
+                tokenSource.Cancel();
+                handler.ChannelStreamingStop(channelIds);
             }
             if (throwable)
                 throw new TimeoutException($"[RequestRangeChannel] The operation has timed out111.[{timeOut}]");

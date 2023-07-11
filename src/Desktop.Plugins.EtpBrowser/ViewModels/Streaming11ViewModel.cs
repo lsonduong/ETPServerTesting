@@ -227,8 +227,19 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
                 .Select(x => x.Record.ChannelId)
                 .ToArray();
 
+            var scale = Channels
+                .Where(c => c.IsChecked)
+                .Select(x => x.Record)
+                .FirstOrDefault()?
+                .Indexes
+                .Cast<IIndexMetadataRecord>()
+                .FirstOrDefault()?
+                .Scale;
+
             JsonHelper.WriteToJsonFile(oPath + "\\channels.json", channels);
             JsonHelper.WriteToJsonFile(oPath + "\\startIndex.json", GetStreamingStartValue(false));
+            JsonHelper.WriteToJsonFile(oPath + "\\endIndex.json", GetStreamingEndValue());
+            JsonHelper.WriteToJsonFile(oPath + "\\scale.json", scale);
 
             MessageBox.Show("Save info successfully to" + oPath);
         }

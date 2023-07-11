@@ -540,6 +540,8 @@
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestBase.cs" />
     <Compile Include="IntegrationTestCases\InputProtocolTests.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC001ValidateTheFunctionalityOfLatestValueForRTLog.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC004ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog.cs" />
+    <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC003ValidateTheFunctionalityOfRequestRangeWhenDepthIndexIsSelectedForRTLog.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC002ValidateTheFunctionalityOfIndexCountForRTLog.cs" />
     <Compile Include="IntegrationTestCases\Support\JsonFileReader.cs" />
     <Compile Include="Plugins\WitsmlBrowser\SettingsViewModelTests.cs" />

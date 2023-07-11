@@ -1,4 +1,5 @@
-﻿using AventStack.ExtentReports.Utils;
+﻿using AspectInjector.Broker;
+using AventStack.ExtentReports.Utils;
 using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
 using Energistics.Etp.v11.Datatypes.ChannelData;
@@ -6,12 +7,15 @@ using Energistics.Etp.v11.Protocol.ChannelStreaming;
 using Energistics.Etp.v11.Protocol.Discovery;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using PDS.WITSMLstudio.Data.Channels;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support;
 using PDS.WITSMLstudio.Framework;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +23,15 @@ using System.Threading.Tasks;
 namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
 {
     [TestClass]
-    public class TC001ValidateTheFunctionalityOfLatestValueForRTLog : TestBase
+    public class TC004ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog : TestBase
     {
 
         protected string testFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_TC001";
+                + "\\ETPTesting\\inputs_TC004";
 
         [TestMethod]
-        [Description("ValidateTheFunctionalityOfLatestValueForRTLog")]
-        public async Task ValidateTheFunctionalityOfLatestValueForRTLog()
+        [Description("ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog")]
+        public async Task ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog()
         {
             client.Register<IChannelStreamingConsumer, ChannelStreamingConsumerHandler>();
             client.Register<IDiscoveryCustomer, DiscoveryCustomerHandler>();
@@ -50,11 +54,18 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
             handler.ChannelDescribe(uris);
             var argsMetadata = await onGetChannelMetaData.WaitAsync();
 
-            var listChannels = JsonFileReader.ReadChannels(testFolder);
+            var listChannels = JsonFileReader.ReadChannelsDepthIndex(testFolder);
 
             var message = await StreamingChannel(listChannels, count: -1, throwable: false);
+            List<DataItem> lastItems = new List<DataItem>();
 
-            var messageJson = EtpExtensions.Serialize(message, true);
+            for (int i = Math.Max(0, message.Count - 100); i < message.Count; ++i)
+            {
+                lastItems.Add(message[i]);
+            }
+
+            var messageJson = EtpExtensions.Serialize(lastItems, true);
+
             var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder + "\\result.json");
 
             Assert.IsTrue(result);

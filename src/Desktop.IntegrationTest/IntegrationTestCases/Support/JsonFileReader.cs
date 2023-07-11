@@ -13,6 +13,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using AventStack.ExtentReports.Utils;
 using SuperSocket.Common;
+using Energistics.DataAccess.WITSML200.ReferenceData;
 
 namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
 {
@@ -54,6 +55,46 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
         }
 
         /// <summary>
+        /// Reads Channel Ids from an Json file from folder input.
+        /// </summary>
+        /// <param name="jsonPath">The folder path contains json data.</param>
+        /// <returns>Returns a new instance of the Channels read from the Json file.</returns>
+        public static List<long> ReadChannelIds(string jsonPath)
+        {
+            return JsonHelper.ReadFromJsonArray<long>(jsonPath + "\\channels.json");
+        }
+
+        /// <summary>
+        /// Reads scale from an Json file from folder input.
+        /// </summary>
+        /// <param name="jsonPath">The folder path contains json data.</param>
+        /// <returns>Returns a new instance of the Channels read from the Json file.</returns>
+        public static int ReadScale(string jsonPath)
+        {
+            return JsonHelper.ReadFromJsonFile<int>(jsonPath + "\\scale.json");
+        }
+
+        /// <summary>
+        /// Reads start index from an Json file from folder input.
+        /// </summary>
+        /// <param name="jsonPath">The folder path contains json data.</param>
+        /// <returns>Returns a new instance of the Channels read from the Json file.</returns>
+        public static long ReadStartIndex(string jsonPath)
+        {
+            return JsonHelper.ReadFromJsonFile<long>(jsonPath + "\\startIndex.json");
+        }
+
+        /// <summary>
+        /// Reads end index from an Json file from folder input.
+        /// </summary>
+        /// <param name="jsonPath">The folder path contains json data.</param>
+        /// <returns>Returns a new instance of the Channels read from the Json file.</returns>
+        public static long ReadEndIndex(string jsonPath)
+        {
+            return JsonHelper.ReadFromJsonFile<long>(jsonPath + "\\endIndex.json");
+        }
+
+        /// <summary>
         /// Reads Channels from an Json file from folder input.
         /// </summary>
         /// <param name="jsonPath">The folder path contains json data.</param>
@@ -76,6 +117,46 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
             } else
             {
                 startItem = Convert.ToInt64(startIndex);
+            }
+
+            foreach (var id in channels)
+            {
+                var channelInfo = new ChannelStreamingInfo
+                {
+                    ChannelId = id,
+                    StartIndex = new StreamingStartIndex { Item = startItem },
+                    ReceiveChangeNotification = true
+                };
+
+                listChannels.Add(channelInfo);
+            }
+
+            return listChannels;
+
+        }
+
+        /// <summary>
+        /// Reads Channels Depth Index from an Json file from folder input.
+        /// </summary>
+        /// <param name="jsonPath">The folder path contains json data.</param>
+        /// <returns>Returns a new instance of the Channels read from the Json file.</returns>
+        public static List<ChannelStreamingInfo> ReadChannelsDepthIndex(string jsonPath)
+        {
+            List<long> channels = JsonHelper.ReadFromJsonArray<long>(jsonPath + "\\channels.json");
+            var listChannels = new List<ChannelStreamingInfo>();
+
+            string startIndex = JsonHelper.ReadFromJsonFile(jsonPath + "\\startIndex.json").Trim();
+            int scale = ReadScale(jsonPath);
+
+            object startItem;
+
+            if (startIndex.Equals("null") || startIndex.IsNullOrEmpty())
+            {
+                startItem = null;
+            }
+            else
+            {
+                startItem = Convert.ToInt64(Convert.ToInt32(startIndex) * Math.Pow(10, scale));
             }
 
             foreach (var id in channels)
