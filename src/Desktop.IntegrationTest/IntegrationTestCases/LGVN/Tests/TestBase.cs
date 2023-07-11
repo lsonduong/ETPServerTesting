@@ -68,7 +68,6 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
         protected void OnChannelMetaData(object sender, ProtocolEventArgs<ChannelMetadata> e)
         {
             Console.WriteLine("Channel Meta Data");
-            var a = e.Message;
         }
 
         protected async Task<List<DataItem>> StreamingChannel(List<ChannelStreamingInfo> listChannels, int count = 1, int timeOut = 30000, bool throwable = true)
@@ -94,7 +93,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             }
             if (throwable)
                 throw new TimeoutException($"[StreamingChannel] The operation has timed out.[{timeOut}]");
-            return ChannelDataRecords;
+            var response = new List<DataItem>(ChannelDataRecords);
+            ChannelDataRecords.Clear();
+            return response;
         }
 
         protected async Task<List<DataItem>> RequestRangeChannel(ChannelMetadataRecord channel, DateTime startTime, DateTime endTime, int timeOut = 30000, bool throwable = true)
@@ -121,11 +122,11 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             var onGetChannelData = AsyncHelper.HandleAsync<ChannelData>(x => handler.OnChannelData += x);
             Task taskCount = new Task(() =>
             {
-                var lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(channelScale) : 0;
+                var lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.First().IndexFromScale(channelScale) : 0;
 
                 while (lastIndex < endIndex)
                 { 
-                    lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.FirstOrDefault().IndexFromScale(channelScale) : 0; 
+                    lastIndex = ChannelDataRecords.Count != 0 ? ChannelDataRecords.Last().Indexes.First().IndexFromScale(channelScale) : 0; 
                 }
             });
             taskCount.Start();
@@ -134,11 +135,13 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             if (completedTask == taskCount)
             {
                 tokenSource.Cancel();
-                handler.ChannelStreamingStop(new[] { channel.ChannelId });
             }
+            handler.ChannelStreamingStop(new[] { channel.ChannelId });
             if (throwable)
-                throw new TimeoutException($"[RequestRangeChannel] The operation has timed out111.[{timeOut}]");
-            return ChannelDataRecords;
+                throw new TimeoutException($"[RequestRangeChannel] The operation has timed out.[{timeOut}]");
+            var response = new List<DataItem>(ChannelDataRecords);
+            ChannelDataRecords.Clear();
+            return response;
         }
 
         protected async Task<List<DataItem>> RequestRangeChannel(IList<long> channelIds, int scale, long startIndex, long endIndex, int timeOut = 30000, bool throwable = true)
