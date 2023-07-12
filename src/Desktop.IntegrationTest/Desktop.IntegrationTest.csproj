@@ -544,6 +544,7 @@
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC003ValidateTheFunctionalityOfRequestRangeWhenDepthIndexIsSelectedForRTLog.cs" />
     <Compile Include="IntegrationTestCases\LGVN\Tests\TestCasesPOC\TC002ValidateTheFunctionalityOfIndexCountForRTLog.cs" />
     <Compile Include="IntegrationTestCases\Support\JsonFileReader.cs" />
+    <Compile Include="IntegrationTestCases\Support\MiscExtentions.cs" />
     <Compile Include="Plugins\WitsmlBrowser\SettingsViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Plugins\WitsmlBrowser\WitsmlBrowserViewModelTests.cs" />

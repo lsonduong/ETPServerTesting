@@ -57,12 +57,8 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
             var listChannels = JsonFileReader.ReadChannelsDepthIndex(testFolder);
 
             var message = await StreamingChannel(listChannels, count: -1, throwable: false);
-            List<DataItem> lastItems = new List<DataItem>();
 
-            for (int i = Math.Max(0, message.Count - 100); i < message.Count; ++i)
-            {
-                lastItems.Add(message[i]);
-            }
+            var lastItems = MiscExtentions.TakeLast(message, 100);
 
             var messageJson = EtpExtensions.Serialize(lastItems, true);
 
