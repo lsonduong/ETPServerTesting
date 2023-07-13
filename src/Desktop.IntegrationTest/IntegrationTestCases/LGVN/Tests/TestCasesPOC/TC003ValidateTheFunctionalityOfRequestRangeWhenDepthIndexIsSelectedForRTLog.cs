@@ -22,9 +22,6 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
     [TestClass]
     public class TC003ValidateTheFunctionalityOfRequestRangeWhenDepthIndexIsSelectedForRTLog : TestBase
     {
-        private static readonly TestListener test = new TestListener().GetListener();
-        public TestContext TestContext { get; set; }
-
         protected string testFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\ETPTesting\\inputs_TC003";
 

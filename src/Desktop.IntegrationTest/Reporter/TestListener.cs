@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace PDS.WITSMLstudio.Desktop.Reporter
 {
-    internal class TestListener
+    public class TestListener
     {
         /* Create an object of the ExtenReports class */
         public static ExtentReports _extent;

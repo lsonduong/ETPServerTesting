@@ -55,7 +55,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.Sample
 
             //======================================================================================================
             // Request Range - Time Index
-            var channelStreamingTimeIndex = channels.Where(c => c.ChannelName == "ROP Avg").First();
+            var channelStreamingTimeIndex = channels.Where(c => c.ChannelName == "ROP Avg").Last();
             DateTime startTime = DateTime.ParseExact("2010/15/06", "yyyy/dd/MM", System.Globalization.CultureInfo.InvariantCulture);
             DateTime endTime = DateTime.ParseExact("2023/05/07", "yyyy/dd/MM", System.Globalization.CultureInfo.InvariantCulture);
             var resultRangeRequest2 = await RequestRangeChannel(channelStreamingTimeIndex, startTime, endTime, throwable: false);

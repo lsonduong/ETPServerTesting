@@ -272,12 +272,6 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NUnit.Allure, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.Allure.1.2.1.1\lib\netstandard2.0\NUnit.Allure.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.13.3.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.13.3\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="RazorEngine.NetCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.NetCore.2.2.6\lib\net461\RazorEngine.NetCore.dll</HintPath>
     </Reference>
@@ -524,7 +518,6 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInitializer.cs" />
-    <Compile Include="Connections\ConnectionUnitTests.cs" />
     <Compile Include="Connections\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\ConnectionTestTests.cs" />
     <Compile Include="IntegrationTestCases\EtpBrowser\SettingsViewModelTests.cs" />

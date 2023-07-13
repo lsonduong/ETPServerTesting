@@ -9,6 +9,7 @@ using PDS.WITSMLstudio.Desktop.Core;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Common;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Core;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper;
+using PDS.WITSMLstudio.Desktop.Reporter;
 using PDS.WITSMLstudio.Framework;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
     [TestClass]
     public class TestBase
     {
+        protected static readonly TestListener test = new TestListener().GetListener();
+        public TestContext TestContext { get; set; }
         protected string session;
         protected IEtpClient client;
         protected ETPClientConfiguration clientConfiguration;
@@ -34,9 +37,18 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
 
         private List<DataItem> ChannelDataRecords;
 
+        [ClassCleanup]
+        public static void TearDown()
+        {
+            test.Flush();
+        }
+
         [TestInitialize]
         public void TestSetUp()
         {
+            test.CreateTest(TestContext.TestName);
+            test.Info("Namespace:" + TestContext.FullyQualifiedTestClassName);
+
             session = Guid.NewGuid().ToString();
             ChannelDataRecords = new List<DataItem>();
 
