@@ -861,29 +861,29 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
                 EtpExtensions.Serialize(e.Message, true),
                 Environment.NewLine));
 
-            string path = "C:\\Output\\Result.txt";
-            if (!File.Exists(path))
-            {
-                File.Create(path);
-                TextWriter tw = new StreamWriter(path);
-                tw.WriteLine(string.Format(
-                        "// Header:{2}{0}{2}{2}// Body:{2}{1}{2}",
-                        EtpExtensions.Serialize(e.Header, true),
-                        EtpExtensions.Serialize(e.Message, true),
-                        Environment.NewLine));
-                tw.Close();
-            }
-            else if (File.Exists(path))
-            {
-                using (var sw = new StreamWriter(path, true))
-                {
-                    sw.WriteLine(string.Format(
-                        "// Header:{2}{0}{2}{2}// Body:{2}{1}{2}",
-                        EtpExtensions.Serialize(e.Header, true),
-                        EtpExtensions.Serialize(e.Message, true),
-                        Environment.NewLine));
-                }
-            }
+            //string path = "C:\\Output\\Result.txt";
+            //if (!File.Exists(path))
+            //{
+            //    File.Create(path);
+            //    TextWriter tw = new StreamWriter(path);
+            //    tw.WriteLine(string.Format(
+            //            "// Header:{2}{0}{2}{2}// Body:{2}{1}{2}",
+            //            EtpExtensions.Serialize(e.Header, true),
+            //            EtpExtensions.Serialize(e.Message, true),
+            //            Environment.NewLine));
+            //    tw.Close();
+            //}
+            //else if (File.Exists(path))
+            //{
+            //    using (var sw = new StreamWriter(path, true))
+            //    {
+            //        sw.WriteLine(string.Format(
+            //            "// Header:{2}{0}{2}{2}// Body:{2}{1}{2}",
+            //            EtpExtensions.Serialize(e.Header, true),
+            //            EtpExtensions.Serialize(e.Message, true),
+            //            Environment.NewLine));
+            //    }
+            //}
         }
 
         /// <summary>

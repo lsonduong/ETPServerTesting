@@ -11,6 +11,7 @@ using PDS.WITSMLstudio.Data.Channels;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support;
+using PDS.WITSMLstudio.Desktop.Reporter;
 using PDS.WITSMLstudio.Framework;
 using SharpCompress.Common;
 using System;
@@ -25,6 +26,8 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
     [TestClass]
     public class TC004ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog : TestBase
     {
+        private static readonly TestListener test = new TestListener().GetListener();
+        public TestContext TestContext { get; set; }
 
         protected string testFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\ETPTesting\\inputs_TC004";
@@ -33,6 +36,9 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
         [Description("ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog")]
         public async Task ValidateTheFunctionalityOfDepthIndexWhenStartStreamingIsSelectedForRTLog()
         {
+            test.CreateTest(TestContext.TestName);
+            test.Info("Namespace:" + TestContext.FullyQualifiedTestClassName);
+
             client.Register<IChannelStreamingConsumer, ChannelStreamingConsumerHandler>();
             client.Register<IDiscoveryCustomer, DiscoveryCustomerHandler>();
 
