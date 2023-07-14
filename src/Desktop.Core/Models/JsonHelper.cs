@@ -71,6 +71,34 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
         }
 
         /// <summary>
+        /// Writes the given string content to a Json file.
+        /// <para>Object type must have a parameterless constructor.</para>
+        /// <para>Only Public properties and variables will be written to the file. These can be any type though, even other classes.</para>
+        /// <para>If there are public properties/variables that you do not want written to the file, decorate them with the [JsonIgnore] attribute.</para>
+        /// </summary>
+        /// <param name="filePath">The file path to write the object instance to.</param>
+        /// <param name="contentToWrite">The content to write to the file.</param>
+        /// <param name="append">If false the file will be overwritten if it already exists. If true the contents will be appended to the file.</param>
+        public static void WriteToJsonFile(string filePath, string contentToWrite, bool append = false)
+        {
+            TextWriter writer = null;
+            try
+            {
+                writer = new StreamWriter(filePath, append);
+                writer.WriteLine(contentToWrite);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                if (writer != null)
+                    writer.Close();
+            }
+        }
+
+        /// <summary>
         /// Reads raw data from an Json file.
         /// <para>Object type must have a parameterless constructor.</para>
         /// </summary>

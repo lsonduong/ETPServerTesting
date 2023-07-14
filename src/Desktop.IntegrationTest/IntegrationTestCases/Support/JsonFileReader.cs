@@ -12,8 +12,10 @@ using SharpCompress.Common;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using AventStack.ExtentReports.Utils;
+using JsonDiffPatchDotNet;
 using SuperSocket.Common;
 using Energistics.DataAccess.WITSML200.ReferenceData;
+using PDS.WITSMLstudio.Desktop.Reporter;
 
 namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
 {
@@ -178,13 +180,31 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support
         /// <summary>
         /// Compare json object to baseline
         /// </summary>
-        public static bool CompareJsonObjectToFile(string jsonString, string jsonPath)
+        public static bool CompareJsonObjectToFile(string jsonString, string jsonPath, TestListener test = null)
         {
+            var diffObj = new JsonDiffPatch();
+
             string jsonContent = JsonHelper.ReadFromJsonFile(jsonPath);
             JArray jsonExpected = JArray.Parse(jsonContent);
             JArray jsonActual = JArray.Parse(jsonString);
 
-            return JToken.DeepEquals(jsonActual, jsonExpected);
+            bool comparison = JToken.DeepEquals(jsonActual, jsonExpected);
+
+            if (!comparison)
+            {
+                var result = diffObj.Diff(jsonActual, jsonExpected);
+                if (test != null)
+                {
+                    test.Info("Json Comparing Differences:");
+                    test.Info(result.ToString());
+                } else
+                {
+                    Console.WriteLine("Json Comparing Differences:");
+                    Console.WriteLine(result.ToString());
+                }
+            }
+
+            return comparison;
         }
     }
 }

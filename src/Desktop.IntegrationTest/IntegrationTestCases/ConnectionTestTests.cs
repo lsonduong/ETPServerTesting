@@ -69,7 +69,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection().deserialize(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_06202023_0305PM\\connection.json");
+                + "\\ETPTesting\\inputs_TC001\\connection.json");
             //var connection = new Connection() { Uri = _validEtpUri, AuthenticationType = AuthenticationTypes.Basic, 
             //Username = "hai.vu3@halliburton.com", Password = "KhongCho@345"};
 
@@ -91,7 +91,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases
 
             var etpConnectionTest = new EtpConnectionTest(_runtime);
             var connection = new Connection().deserialize(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                + "\\ETPTesting\\inputs_06202023_0305PM\\connection.json");
+                + "\\ETPTesting\\inputs_TC001\\connection.json");
             //{
             //    Uri = _validEtpUri,
             //    AuthenticationType = AuthenticationTypes.Basic,

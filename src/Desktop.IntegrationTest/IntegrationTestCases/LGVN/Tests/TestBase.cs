@@ -37,8 +37,8 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
 
         private List<DataItem> ChannelDataRecords;
 
-        [ClassCleanup]
-        public static void TearDown()
+        [TestCleanup]
+        public void TearDown()
         {
             test.Flush();
         }
@@ -68,7 +68,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
         {
             string outputLoc = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + "\\ETPTesting\\outputs" + DateTime.Now.ToString("_MMddyyyy_hhmmtt") + "\\response.json";
-            StringHelper.LogClientOutput(message);
+            StringHelper.LogClientOutput(message, outputLoc);
         }
 
         protected void OnChannelData(object sender, ProtocolEventArgs<ChannelData> e)
@@ -165,15 +165,17 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             return response;
         }
 
-        protected async Task<List<DataItem>> RequestRangeChannel(IList<long> channelIds, int scale, long startIndex, long endIndex, int timeOut = 30000, bool throwable = true)
+        protected async Task<List<DataItem>> RequestRangeChannel(IList<long> channelIds, long startIndex, long endIndex, int scale = 0, int timeOut = 30000, bool throwable = true)
         {
             var handler = client.Handler<IChannelStreamingConsumer>();
             handler.OnChannelData += OnChannelData;
+            long startIndexScaled = Convert.ToDouble(startIndex).IndexToScale(scale);
+            long endIndexScaled = Convert.ToDouble(endIndex).IndexToScale(scale);
             var channelRangeInfo = new ChannelRangeInfo
             {
                 ChannelId = channelIds,
-                StartIndex = startIndex,
-                EndIndex = endIndex
+                StartIndex = startIndexScaled,
+                EndIndex = endIndexScaled
             };
 
             handler.ChannelRangeRequest(new[] { channelRangeInfo });

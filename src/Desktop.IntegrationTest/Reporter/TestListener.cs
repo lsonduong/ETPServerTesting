@@ -58,7 +58,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
             var htmlReporter = new ExtentHtmlReporter(reportPath);
             _extent = new ExtentReports();
             _extent.AttachReporter(htmlReporter); 
-            _extent.AddSystemInfo("Host Name", "Etp Server Testint MSTest Framework");
+            _extent.AddSystemInfo("Host Name", "Etp Server Testing MSTest Framework");
             _extent.AddSystemInfo("Environment", "Test Environment");
             _extent.AddSystemInfo("UserName", "Duong Luong");
         }
@@ -76,6 +76,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
          */
         public void Info(String message)
         {
+            Console.WriteLine($"{message}");
             _test.Log(Status.Info, message);
         }
 
@@ -84,6 +85,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
          */
         public void LogFail(String message)
         {
+            Console.WriteLine($"{message}");
             _test.Log(Status.Fail, message);
         }
 
@@ -92,6 +94,7 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
 */
         public void LogPass(String message)
         {
+            Console.WriteLine($"{message}");
             _test.Log(Status.Pass, message);
         }
 
@@ -114,10 +117,10 @@ namespace PDS.WITSMLstudio.Desktop.Reporter
                 //Assertion to be placed here
                 LogPass("Check Passed");
             }
-            catch (AssertFailedException e)
+            catch (Exception e)
             {
-                Assert.IsTrue(condition);
                 LogFail("Check Failed:" + e);
+                Assert.IsTrue(condition);
             }
         }
 

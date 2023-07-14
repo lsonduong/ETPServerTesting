@@ -240,6 +240,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
             JsonHelper.WriteToJsonFile(oPath + "\\startIndex.json", GetStreamingStartValue(false));
             JsonHelper.WriteToJsonFile(oPath + "\\endIndex.json", GetStreamingEndValue());
             JsonHelper.WriteToJsonFile(oPath + "\\scale.json", scale);
+            JsonHelper.WriteToJsonFile(oPath + "\\streamingType.json", Model.Streaming.StreamingType);
 
             MessageBox.Show("Save info successfully to" + oPath);
         }

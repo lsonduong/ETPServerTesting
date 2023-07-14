@@ -59,15 +59,15 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
 
 
             test.Info("Call headless function to execute requests and receive message responses");
-            var message = await RequestRangeChannel(listChannelIds, scale, startIndex, endIndex, throwable: false);
+            var message = await RequestRangeChannel(listChannelIds, startIndex, endIndex, scale, throwable: false);
             var messageJson = EtpExtensions.Serialize(message, true);
 
             test.Info("Comparing result json message with baseline result file");
-            var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder + "\\result.json");
-            Assert.IsTrue(result);
+            var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder + "\\result.json", test);
+            
+            test.AssertTrue(result);
 
             test.Info("End of Test Case.");
-            Console.WriteLine("End........");
         }
     }
 }
