@@ -112,10 +112,19 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
 
         protected async Task<List<DataItem>> RequestRangeChannel(ChannelMetadataRecord channel, DateTime startTime, DateTime endTime, int timeOut = 30000, bool throwable = true)
         {
-            return await RequestRangeChannel(channel, new DateTimeOffset(startTime).ToUnixTimeMicroseconds(), new DateTimeOffset(endTime).ToUnixTimeMicroseconds(), timeOut, throwable);
+            return await _requestRangeChannel(channel, new DateTimeOffset(startTime).ToUnixTimeMicroseconds(), new DateTimeOffset(endTime).ToUnixTimeMicroseconds(), timeOut, throwable);
         }
 
         protected async Task<List<DataItem>> RequestRangeChannel(ChannelMetadataRecord channel, long startIndex, long endIndex, int timeOut = 30000, bool throwable = true)
+        {
+            var channelScale = channel.Indexes.FirstOrDefault()?.Scale ?? 0;
+            var startIndexScaled = Convert.ToInt64((startIndex * Math.Pow(10, channelScale)));
+            var endIndexScaled = Convert.ToInt64((endIndex * Math.Pow(10, channelScale)));
+
+            return await _requestRangeChannel(channel, startIndexScaled, endIndexScaled, timeOut, throwable);
+        }
+
+        private async Task<List<DataItem>> _requestRangeChannel(ChannelMetadataRecord channel, long startIndex, long endIndex, int timeOut = 30000, bool throwable = true)
         {
             var handler = client.Handler<IChannelStreamingConsumer>();
             handler.OnChannelData += OnChannelData;
