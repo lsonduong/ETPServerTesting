@@ -58,7 +58,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
 
             var listChannels = JsonFileReader.ReadChannelsDepthIndex(testFolder);
 
-            var message = await StreamingChannel(listChannels, count: -1, throwable: false);
+            var message = await StreamingChannel(listChannels, count: -1, 60000, throwable: false);
 
             var lastItems = MiscExtentions.TakeLast(message, 100);
 

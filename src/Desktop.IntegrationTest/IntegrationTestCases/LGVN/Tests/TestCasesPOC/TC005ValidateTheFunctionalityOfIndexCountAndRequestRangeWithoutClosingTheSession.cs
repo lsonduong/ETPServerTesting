@@ -62,18 +62,22 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
 
             Assert.IsTrue(resultIC);
 
-            var listChannels = JsonFileReader.ReadChannelsDepthIndex(testFolder1);
 
-            var message = await StreamingChannel(listChannels, count: -1, throwable: false);
+            test.Info("Reading parameters from json inputs");
+            var listChannelIds = JsonFileReader.ReadChannelIds(testFolder1);
+            var scale = JsonFileReader.ReadScale(testFolder1);
+            var startIndex = JsonFileReader.ReadStartIndex(testFolder1);
+            var endIndex = JsonFileReader.ReadEndIndex(testFolder1);
 
-            var lastItems = MiscExtentions.TakeLast(message, 100);
-            var messageJson = EtpExtensions.Serialize(lastItems, true);
 
-            var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder1 + "\\result.json");
+            test.Info("Call headless function to execute requests and receive message responses");
+            var message = await RequestRangeChannel(listChannelIds, startIndex, endIndex, scale, throwable: false);
+            var messageJson = EtpExtensions.Serialize(message, true);
 
-            Assert.IsTrue(result);
+            test.Info("Comparing result json message with baseline result file");
+            var result = JsonFileReader.CompareJsonObjectToFile(messageJson, testFolder1 + "\\result.json", test);
 
-            Console.WriteLine("End........");
+            test.AssertTrue(result);
         }
     }
 }
