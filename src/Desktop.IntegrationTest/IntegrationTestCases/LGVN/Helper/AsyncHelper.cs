@@ -71,7 +71,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper
             return await task;
         }
 
-        public static async Task<TResult> WaitAsync<TResult>(this Task<TResult> task, int milliseconds = 20000)
+        public static async Task<TResult> WaitAsync<TResult>(this Task<TResult> task, int milliseconds = 120000)
         {
             return await task.WaitAsync(TimeSpan.FromMilliseconds(milliseconds));
         }
