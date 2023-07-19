@@ -530,6 +530,8 @@ namespace PDS.WITSMLstudio.Connections
         /// </summary>
         public void serialize(string filePath)
         {
+            Username = Serializer.EncryptString(Username);
+            Password = Serializer.EncryptString(Password);
             Serializer.WriteToJsonFile(filePath, this);
         }
 

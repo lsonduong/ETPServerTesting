@@ -9,6 +9,7 @@ using PDS.WITSMLstudio.Desktop.Core;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Common;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Core;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper;
+using PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support;
 using PDS.WITSMLstudio.Desktop.Reporter;
 using PDS.WITSMLstudio.Framework;
 using System;
@@ -29,11 +30,12 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
         protected static readonly TestListener test = new TestListener().GetListener();
         public TestContext TestContext { get; set; }
         protected string session;
+        public string secretKey = "ncUEXCuCq7TZdFjdMGtieghZPUWS8R2c";
         protected IEtpClient client;
         protected ETPClientConfiguration clientConfiguration;
         private const string Uri = "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp";
-        protected const string Username = "hai.vu3@halliburton.com";
-        protected const string Password = "KhongCho@345";
+        protected const string Username = "igZpLIil9NTEedKjgYwQV+QSbrY1KaozzJfF28NpwKQ=";
+        protected const string Password = "HAH4a5mLmgEbsQW51fnzGw==";
 
         private List<DataItem> ChannelDataRecords;
 
@@ -52,12 +54,15 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests
             session = Guid.NewGuid().ToString();
             ChannelDataRecords = new List<DataItem>();
 
+            var decryptedUsername = Encryption.DecryptString(secretKey, Username);
+            var decryptedPassword = Encryption.DecryptString(secretKey, Password);
+
             var connection = new Connection()
             {
                 Uri = Uri,
                 AuthenticationType = AuthenticationTypes.Basic,
-                Username = Username,
-                Password = Password,
+                Username = decryptedUsername,
+                Password = decryptedPassword,
             };
             clientConfiguration = new ETPClientConfiguration(connection, GetType().Assembly.FullName, GetType().GetAssemblyVersion());
             client = ETPClientManagement.CreateEtpClient(session, clientConfiguration);
