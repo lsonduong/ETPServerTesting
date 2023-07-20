@@ -543,7 +543,10 @@ namespace PDS.WITSMLstudio.Connections
         /// </summary>
         public Connection deserialize(string filePath)
         {
-            return Serializer.ReadFromJsonFile<Connection>(filePath);
+            Connection con = Serializer.ReadFromJsonFile<Connection>(filePath);
+            con.Username = Serializer.DecryptString(con.Username);
+            con.Password = Serializer.DecryptString(con.Password);
+            return con;
         }
 
         #region INotifyPropertyChanged Members

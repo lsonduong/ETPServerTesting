@@ -9,6 +9,8 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
 {
     internal class Serializer
     {
+        private static string secretKey = "ncUEXCuCq7TZdFjdMGtieghZPUWS8R2c";
+
         /// <summary>
         /// Encrypt String using symmetric key
         /// </summary>
@@ -19,7 +21,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
 
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes("ncUEXCuCq7TZdFjdMGtieghZPUWS8R2c");
+                aes.Key = Encoding.UTF8.GetBytes(secretKey);
                 aes.IV = iv;
 
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
@@ -51,7 +53,7 @@ namespace PDS.WITSMLstudio.Desktop.Core.Models
 
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes("ncUEXCuCq7TZdFjdMGtieghZPUWS8R2c");
+                aes.Key = Encoding.UTF8.GetBytes(secretKey);
                 aes.IV = iv;
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
