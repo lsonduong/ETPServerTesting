@@ -6,6 +6,8 @@ using Energistics.Etp.v11.Protocol.ChannelStreaming;
 using Energistics.Etp.v11.Protocol.Discovery;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using PDS.WITSMLstudio.Desktop.Core;
+using PDS.WITSMLstudio.Desktop.Core.Adapters;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Helper;
 using PDS.WITSMLstudio.Desktop.IntegrationTestCases.Support;
@@ -29,12 +31,15 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
         [Description("ValidateTheFunctionalityOfLatestValueForRTLog")]
         public async Task ValidateTheFunctionalityOfLatestValueForRTLog()
         {
+            var requestedProtocol = JsonFileReader.ReadProtocolList(testFolder);
+            IEtpExtender extender = client.CreateEtpExtender(requestedProtocol);
+
             client.Register<IChannelStreamingConsumer, ChannelStreamingConsumerHandler>();
             client.Register<IDiscoveryCustomer, DiscoveryCustomerHandler>();
 
             var handlerD = client.Handler<IDiscoveryCustomer>();
-
             var handler = client.Handler<IChannelStreamingConsumer>();
+
             handler.OnChannelData += OnChannelData;
             handler.OnChannelMetadata += OnChannelMetaData;
 
@@ -47,7 +52,7 @@ namespace PDS.WITSMLstudio.Desktop.IntegrationTestCases.LGVN.Tests.TestCasesPOC
             // Describe 
             var uris = JsonFileReader.ReadUris(testFolder);
 
-            handler.ChannelDescribe(uris);
+            extender.ChannelDescribe(uris);
             var argsMetadata = await onGetChannelMetaData.WaitAsync();
 
             var listChannels = JsonFileReader.ReadChannels(testFolder);
