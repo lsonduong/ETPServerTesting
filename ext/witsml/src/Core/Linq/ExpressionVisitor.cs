@@ -35,7 +35,7 @@ namespace PDS.WITSMLstudio.Linq
         /// <param name="expression">The expression.</param>
         /// <returns>A type specific expression visitation.</returns>
         /// <exception cref="System.ArgumentException">Expression type is not supported</exception>
-        internal Ast.Expression Visit(Ast.Expression expression)
+        public Ast.Expression Visit(Ast.Expression expression)
         {
             switch (expression.CodeType)
             {

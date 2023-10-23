@@ -1,0 +1,963 @@
+[
+  {
+    "indexes": [
+      1502129131
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.06758069992065
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502139259
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.92047166824341
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502149413
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.94479274749756
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502159539
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.87720632553101
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502169677
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.4567928314209
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502179678
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 8.15798759460449
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502189760
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.78301668167114
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502199873
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.55683183670044
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502209988
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.2808575630188
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502220133
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.3312668800354
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502230287
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.83504676818848
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502240416
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.6949450969696
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502250561
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.23525261878967
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502260698
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.16639614105225
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502270833
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.68766641616821
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502280961
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.94878959655762
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502291088
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.21369743347168
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502301241
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.44179964065552
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502311275
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.71565055847168
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502321389
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.94923090934753
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502331506
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.4013991355896
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502341638
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.75377297401428
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502351769
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.03253555297852
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502361925
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.45022368431091
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502372051
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.62427568435669
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502382204
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.96156096458435
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502392358
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.44672083854675
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502402493
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.36338353157043
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502412646
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.60014390945435
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502422649
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 1.86858808994293
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502432796
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.08884453773499
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502442963
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.55046510696411
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502453059
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.40170526504517
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502463179
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 8.03528499603271
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502473299
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.73790121078491
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502483413
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.88207387924194
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502493533
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.15613794326782
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502503633
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.96087455749512
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502513771
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.51663303375244
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502523915
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.40615272521973
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502534037
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 1.82576453685761
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502544154
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.72006034851074
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502554299
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.2907509803772
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502564415
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.06922960281372
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502574539
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 8.45205974578857
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502584707
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.41912651062012
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502594830
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.22210645675659
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502604993
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.34367251396179
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502615133
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.49079489707947
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502625278
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.27555084228516
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502635408
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.27618098258972
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502645543
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.57174110412598
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502655668
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.7472939491272
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502665803
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.61899280548096
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502675948
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.41854238510132
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502686087
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.90538907051086
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502696205
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.89171648025513
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502706325
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.31871438026428
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502716449
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.45374774932861
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502726586
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.23902082443237
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502736728
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.97896814346313
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502746855
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.41013336181641
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502756939
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.77495622634888
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502766943
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.93124294281006
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502777063
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.75631904602051
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502787181
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.68600940704346
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502797328
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.50402498245239
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502807459
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.94587206840515
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502817587
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.55323266983032
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502827746
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.5763783454895
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502837876
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.73566508293152
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502847992
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 1.50959539413452
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502858136
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 1.66748154163361
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502868289
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.0360541343689
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502878426
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.96220684051514
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502888572
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.83143615722656
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502898713
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.69088125228882
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502908842
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.05901575088501
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502918945
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.4996292591095
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502929064
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.10054397583008
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502939066
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.21049928665161
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502949193
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 2.93028163909912
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502959322
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.85600328445435
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502969406
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.08282661437988
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502979536
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.14365339279175
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502989654
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.81402921676636
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1502999782
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.85818338394165
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503009917
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.68893432617188
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503020060
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 3.22379326820374
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503030187
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 5.6574010848999
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503040353
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.69121026992798
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503050444
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 8.42794704437256
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503060563
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 7.33336544036865
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503070707
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.74594163894653
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503080847
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 6.73499250411987
+    },
+    "valueAttributes": []
+  },
+  {
+    "indexes": [
+      1503091004
+    ],
+    "channelId": 84,
+    "value": {
+      "item": 4.45429372787476
+    },
+    "valueAttributes": []
+  },
+  {
+   

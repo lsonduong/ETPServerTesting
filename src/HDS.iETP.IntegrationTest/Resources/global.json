@@ -1,0 +1,36 @@
+{
+  "writeToDB": false,
+  "writeResultsToDisk": true,
+  "writeResponseToDisk": true,
+  "diskResultsPath": "",
+  "iterations": 1,
+  "testTimeout": 60000,
+  "runTestsInParallel": true,
+  "DBUri": "",
+  "streamingTimeOutindexCountFor10InSec": 800,
+  "streamingTimerIndexCountNoDataInSec": 800,
+  "streamingTimeOutIndexValueInSec": 800,
+  "streamingTimeOutRangeInSec": 800,
+  "streamingTimerCheckIntervalInSec": 800,
+  "generateDetailedLog": true,
+  "maxMessageRate": 1000,
+  "maxDataItems": 10000,
+  "testRuns": [
+    {
+      "name": "RTS-X-41-A",
+      "tag": "X-41-A",
+      "enabled": false,
+      "url": "wss://witsmlapptstetpx.halliburton.com/hal.witsml.host.iis/api/haletp",
+      "username": "NDslSRNcW2Vkca5LCCeB5+22OmRcm6U62zzwOXyR60Y=",
+      "password": "nUXUvqDV00xVIq+/SYLacg==",
+      "secretKey": "ncUEXCuCq7TZdFjdMGtieghZPUWS8R2c",
+      "properties": {
+        "witsmlVersionPath": "WITSML14",
+        "isHistoricalWell": false,
+        "uidWell": "e237d8f5-a5bf-430b-9d8a-e6a078bc3717",
+        "uidWellbore": "fbe34c62-3522-44fd-b06a-89112c0cef9e",
+        "logUID": "99af52e8-ad8d-3e72-a8df-709bc3b4c12e"
+      }
+    }
+  ]
+}

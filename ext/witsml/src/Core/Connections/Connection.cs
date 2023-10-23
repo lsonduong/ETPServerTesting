@@ -22,7 +22,6 @@ using System.Runtime.Serialization;
 using System.Security;
 using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
-using PDS.WITSMLstudio.Desktop.Core.Models;
 
 namespace PDS.WITSMLstudio.Connections
 {
@@ -530,9 +529,13 @@ namespace PDS.WITSMLstudio.Connections
         /// </summary>
         public void serialize(string filePath)
         {
+            string or_username = Username;
+            string or_password = Password;
             Username = Serializer.EncryptString(Username);
             Password = Serializer.EncryptString(Password);
             Serializer.WriteToJsonFile(filePath, this);
+            Username = or_username;
+            Password = or_password;
         }
 
         /// <summary>

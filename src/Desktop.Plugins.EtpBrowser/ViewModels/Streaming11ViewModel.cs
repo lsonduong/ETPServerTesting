@@ -218,7 +218,21 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         {
             string oPath = Parent.GetOutputFilePath();
 
-            Parent.WriteConnectionInfo();
+            var dialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select a folder or just click OK to Save Inputs to default folder",
+                SelectedPath = oPath,
+                ShowNewFolderButton = true
+            };
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                oPath = dialog.SelectedPath;
+            } else
+            {
+                return;
+            }
+
+            Parent.WriteConnectionInfo(oPath);
             JsonHelper.WriteToJsonFile(oPath + "\\protocols.json", Parent.Model.RequestedProtocols, true);
             JsonHelper.WriteToJsonFile(oPath + "\\uris.json", Model.Streaming.Uris);
 
@@ -242,7 +256,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
             JsonHelper.WriteToJsonFile(oPath + "\\scale.json", scale);
             JsonHelper.WriteToJsonFile(oPath + "\\streamingType.json", Model.Streaming.StreamingType);
 
-            MessageBox.Show("Save info successfully to" + oPath);
+            MessageBox.Show("Save info successfully to " + oPath);
         }
 
         private object GetStreamingEndValue()

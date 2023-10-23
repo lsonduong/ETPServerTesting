@@ -5,9 +5,12 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PDS.WITSMLstudio.Desktop.Core.Models
+namespace PDS.WITSMLstudio.Connections
 {
-    internal class Serializer
+    /// <summary>
+    /// Provides a serialization solution for object
+    /// </summary>
+    public class Serializer
     {
         private static string secretKey = "ncUEXCuCq7TZdFjdMGtieghZPUWS8R2c";
 

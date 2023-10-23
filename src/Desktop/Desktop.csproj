@@ -261,25 +261,25 @@
       <Project>{0ef1d73f-e7a0-40b0-803b-7ce4b6b27112}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Desktop.Core\Desktop.Core.csproj">
+    <ProjectReference Include="..\Desktop.Core\HDS.iETP.Core.csproj">
       <Project>{5f8f5ac8-680a-4097-9cf2-ab5a97b3bfdf}</Project>
-      <Name>Desktop.Core</Name>
+      <Name>HDS.iETP.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Desktop.Plugins.DataReplay\Desktop.Plugins.DataReplay.csproj">
+    <ProjectReference Include="..\Desktop.Plugins.DataReplay\HDS.iETP.Plugins.DataReplay.csproj">
       <Project>{4b191a5d-0f2f-4df1-aad3-c0f2be0032d2}</Project>
-      <Name>Desktop.Plugins.DataReplay</Name>
+      <Name>HDS.iETP.Plugins.DataReplay</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Desktop.Plugins.EtpBrowser\Desktop.Plugins.EtpBrowser.csproj">
+    <ProjectReference Include="..\Desktop.Plugins.EtpBrowser\HDS.iETP.Plugins.EtpBrowser.csproj">
       <Project>{10b0e721-a583-4e11-b6a7-deabd739cd98}</Project>
-      <Name>Desktop.Plugins.EtpBrowser</Name>
+      <Name>HDS.iETP.Plugins.EtpBrowser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Desktop.Plugins.ObjectInspector\Desktop.Plugins.ObjectInspector.csproj">
+    <ProjectReference Include="..\Desktop.Plugins.ObjectInspector\HDS.iETP.Plugins.ObjectInspector.csproj">
       <Project>{c17bf64b-b129-4cbc-91df-69f1ebd4365e}</Project>
-      <Name>Desktop.Plugins.ObjectInspector</Name>
+      <Name>HDS.iETP.Plugins.ObjectInspector</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Desktop.Plugins.WitsmlBrowser\Desktop.Plugins.WitsmlBrowser.csproj">
+    <ProjectReference Include="..\Desktop.Plugins.WitsmlBrowser\HDS.iETP.Plugins.WitsmlBrowser.csproj">
       <Project>{7522280e-7550-493d-8cea-2e73c623e93d}</Project>
-      <Name>Desktop.Plugins.WitsmlBrowser</Name>
+      <Name>HDS.iETP.Plugins.WitsmlBrowser</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,106 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: 'HAL.HDS.iETP.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  testCategory: 'POC'
+
+steps:
+
+- task: PowerShell@2
+  displayName: Get Machine Environments
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host "##vso[task.setvariable variable=userfolder;]$env:USERPROFILE\Documents"
+    
+
+- task: NuGetToolInstaller@1
+  displayName: Install Required Tools
+
+- task: NuGetCommand@2
+  displayName: Restore Solution
+  inputs:
+    restoreSolution: '**\*$(solution)'
+
+- task: VSBuild@1
+  displayName: Build Solution
+  inputs:
+    solution: '**\*$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: CopyFiles@2
+  displayName: Copy Test Data
+  inputs:
+    SourceFolder: 'ETPTesting'
+    Contents: '**'
+    TargetFolder: '$(userfolder)\ETPTesting'
+    OverWrite: true
+
+- task: VSTest@2
+  displayName: Run Tests in Category $(testCategory)
+  inputs:
+    testAssemblyVer2: |
+     **\*.iETP.IntegrationTest.dll
+     !**\obj\**
+    testFiltercriteria: TestCategory=$(testCategory)
+    runSettingsFile: $(Build.SourcesDirectory)\src\HDS.iETP.IntegrationTest\test.runsettings
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    otherConsoleOptions: '/Logger:"trx;LogFileName=Results.trx"'
+  continueOnError: true
+
+- task: CmdLine@2
+  displayName: Generate Report
+  inputs:
+    script: '$(Build.SourcesDirectory)\TrxerConsole.exe $(Agent.TempDirectory)\TestResults\Results.trx'
+
+- task: CopyFiles@2
+  displayName: Copy Report
+  inputs:
+    SourceFolder: '$(Agent.TempDirectory)\TestResults'
+    Contents: 'Results.trx.html'
+    TargetFolder: '$(Build.SourcesDirectory)'
+    OverWrite: true
+
+- task: PowerShell@2
+  displayName: Write Email Report
+  inputs:
+    targetType: 'inline'
+    script: |
+      if("$(Agent.JobStatus)" -eq "Succeeded") {
+          Write-Host "##vso[task.setvariable variable=color;]green"
+      }elseif("$(Agent.JobStatus)" -eq "SucceededWithIssues") {
+         Write-Host "##vso[task.setvariable variable=color;]orangered"
+      }elseif("$(Agent.JobStatus)" -eq "Failed") {
+         Write-Host "##vso[task.setvariable variable=color;]red"
+      }else {
+         Write-Host "##vso[task.setvariable variable=color;]silver"
+      }
+
+- task: SendEmail@1
+  displayName: Send Mail With Report
+  inputs:
+    To: 'Duong.Luong2@halliburton.com'
+    From: 'rts.ietp.automatedtests@outlook.com'
+    Subject: 'Automated ETP Testing Report'
+    Body: |
+      <html><body><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="x_mobile-hide" style="background-color:white; border-bottom:solid #eaeaea 1px #eaeaea 1px"></td><td class="x_content" width="640" style="padding:0px; max-width:640px; background-color:white; border-bottom:solid #eaeaea 1px #eaeaea 1px"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="padding:20px 24px 25px 24px; background:white"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="x_responsive-table"><tbody><tr><td><table border="0" cellpadding="0" cellspacing="0" class="x_logo" width="100%"><tbody><tr><td valign="middle" style="word-wrap:none; vertical-align:middle; text-align:left"><span style="color:#666666">Azure</span> <span style="color:#0078D4; font-weight:bold">DevOps</span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td class="x_hero" style="padding:0px 24px"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="x_responsive-table" style="max-width:592px"><tbody><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td><table border="0" style="border-collapse:collapse!important"><tbody><tr style="line-height:36px; border-bottom:solid #eaeaea 1px"><td colspan="2" class="x_title" style="text-align:center; color:#212121; font-size:20px; font-weight:bold; letter-spacing:-0.04em; line-height:36px; word-break:break-word; background-color:$(color)">Repository: rts-iEtp-AutomatedTests</td></tr><tr style=" line-height:30px; word-break:break-word; border-bottom:solid #eaeaea 1px"><td style="font-weight:bold; text-align:left; background-color:LightCyan; color:blue; min-width:100px">Build ID</td><td><span style="text-transform:uppercase; font-size:16px">$(Build.BuildNumber)</span></td></tr></tr><tr style="line-height:30px; word-break:break-word; border-bottom:solid #eaeaea 1px"><td style="font-weight:bold; text-align:left; background-color:LightCyan; color:blue; min-width:100px">Build Status</td><td><span style="text-transform:uppercase; color:$(color); font-size:16px">$(Agent.JobStatus)</span></td></tr><tr style="line-height:30px; word-break:break-word; border-bottom:solid #eaeaea 1px"><td style="font-weight:bold; text-align:left; background-color:LightCyan; color:blue; min-width:100px">Machine</td><td class="x_message"><span style="font-size:16px">$(Agent.MachineName) $(Agent.OS) $(Agent.OSArchitecture)</span></td></tr><tr style="line-height:30px; word-break:break-word; border-bottom:solid #eaeaea 1px"><td style="font-weight:bold; text-align:left; background-color:LightCyan; color:blue; min-width:100px">Build Log</td><td><span style="font-size:16px">Click <a href="https://dev.azure.com/HAL-HDS/Real-Time/_build/results?buildId=$(Build.BuildId)&view=results">here</a> to view Azure Pipeline Result page</span></td></tr><tr style="line-height:30px; word-break:break-word; border-bottom:solid #eaeaea 1px; word-break:break-word"><td style="font-weight:bold; text-align:left; background-color:LightCyan; color:blue; min-width:100px">Test Results</td><td><span style="font-size:16px">Please refer to html attachment for test report details</span></td></tr><tr style="line-height:18px; text-align:center"><td colspan="2"><pre style="white-space:pre-wrap; display:inline; font-family:'Segoe UI','-apple-system','BlinkMacSystemFont','Roboto','Arial',sans-serif; padding:0px; margin:0px; font-size:9px; font-weight:bold; line-height:14px; color:#444444; word-break:break-word">HDS iETP - ETP Automated Testing - Logigear</pre></tr></tbody></table></body></html>
+    BodyAsHtml: true
+    AddAttachment: true
+    Attachment: '$(Build.SourcesDirectory)\Results.trx.html'
+    SmtpServer: 'smtp.office365.com'
+    SmtpUsername: 'rts.ietp.automatedtests@outlook.com'
+    SmtpPassword: 'HDSiEtp2023'
+    UseSSL: true

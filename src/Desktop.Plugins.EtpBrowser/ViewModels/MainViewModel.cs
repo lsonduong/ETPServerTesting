@@ -481,9 +481,15 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         /// <summary>
         /// Write Connection Info to file
         /// </summary>
-        public void WriteConnectionInfo()
+        public void WriteConnectionInfo(string path = "")
         {
-            Model.Connection.serialize(OutputFilePath() + "\\connection.json");
+            if (String.IsNullOrEmpty(path))
+            {
+                Model.Connection.serialize(OutputFilePath() + "\\connection.json");
+            } else
+            {
+                Model.Connection.serialize(path + "\\connection.json");
+            }
         }
 
         /// <summary>

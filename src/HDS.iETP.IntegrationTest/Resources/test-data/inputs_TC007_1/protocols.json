@@ -1,0 +1,37 @@
+[
+  {
+    "Protocol": 1,
+    "Name": "ChannelStreaming",
+    "Role": "producer",
+    "IsEnabled": true,
+    "IsSelected": true
+  },
+  {
+    "Protocol": 3,
+    "Name": "Discovery",
+    "Role": "store",
+    "IsEnabled": true,
+    "IsSelected": true
+  },
+  {
+    "Protocol": 4,
+    "Name": "Store",
+    "Role": "store",
+    "IsEnabled": true,
+    "IsSelected": true
+  },
+  {
+    "Protocol": 5,
+    "Name": "StoreNotification",
+    "Role": "store",
+    "IsEnabled": true,
+    "IsSelected": true
+  },
+  {
+    "Protocol": 6,
+    "Name": "GrowingObject",
+    "Role": "store",
+    "IsEnabled": true,
+    "IsSelected": true
+  }
+]

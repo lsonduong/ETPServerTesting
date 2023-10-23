@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.Views"
-             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="1100">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" MinWidth="475" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="400*" MinWidth="800" />
+            <ColumnDefinition Width="67*" />
+            <ColumnDefinition Width="57*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -16,7 +17,7 @@
             </TabControl>
         </Grid>
 
-        <Grid Grid.Column="1" Margin="5,0,0,0">
+        <Grid Grid.Column="1" Margin="5,0,0,0" Grid.ColumnSpan="2">
             <TabControl>
                 <TabItem Header="Results">
                     <ContentControl x:Name="Details" />
@@ -30,6 +31,6 @@
             </TabControl>
         </Grid>
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="5" Background="Transparent" />
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Left" Width="5" Background="Transparent" />
     </Grid>
 </UserControl>

@@ -18,19 +18,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using Caliburn.Micro;
 using Energistics.Etp.Common;
 using Energistics.Etp.Common.Datatypes;
+using Energistics.Etp.Common.Datatypes.ChannelData;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PDS.WITSMLstudio.Connections;
 using PDS.WITSMLstudio.Desktop.Core;
+using PDS.WITSMLstudio.Desktop.Core.Commands;
 using PDS.WITSMLstudio.Desktop.Core.Models;
 using PDS.WITSMLstudio.Desktop.Core.Runtime;
 using PDS.WITSMLstudio.Desktop.Core.ViewModels;
+using PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.Models;
+using PDS.WITSMLstudio.Framework;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
 {
@@ -49,7 +56,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         public SettingsViewModel(IRuntimeService runtime)
         {
             Runtime = runtime;
-            DisplayName =  "Core";
+            DisplayName =  "Save Inputs";
 
             ConnectionPicker = new ConnectionPickerViewModel(runtime, ConnectionTypes.Etp)
             {
@@ -58,6 +65,57 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
             };
 
             EtpProtocols = new BindableCollection<EtpProtocolItem>();
+            ParamList = new BindableCollection<Parameters>();
+            Channels = new BindableCollection<ChannelMetadataViewModel>();
+            ToggleChannelCommand = new DelegateCommand(x => ToggleSelectedChannel());
+        }
+
+        /// <summary>
+        /// Gets the collection of channel metadata.
+        /// </summary>
+        /// <value>The channel metadata.</value>
+        public BindableCollection<ChannelMetadataViewModel> Channels { get; }
+
+        /// <summary>
+        /// Gets the toggle channel command.
+        /// </summary>
+        public ICommand ToggleChannelCommand { get; }
+
+        private ChannelMetadataViewModel _selectedChannel;
+
+        /// <summary>
+        /// Gets or sets the selected channel.
+        /// </summary>
+        public ChannelMetadataViewModel SelectedChannel
+        {
+            get { return _selectedChannel; }
+            set
+            {
+                if (ReferenceEquals(_selectedChannel, value)) return;
+                _selectedChannel = value;
+                NotifyOfPropertyChange(() => SelectedChannel);
+            }
+        }
+
+        /// <summary>
+        /// Toggles the selected channel.
+        /// </summary>
+        public void ToggleSelectedChannel()
+        {
+            if (SelectedChannel == null) return;
+            SelectedChannel.IsChecked = !SelectedChannel.IsChecked;
+        }
+
+        /// <summary>
+        /// Called when checkbox in ID column of channels datagrid is checked or unchecked.
+        /// </summary>
+        /// <param name="isSelected">if set to <c>true</c> if all channels should be selected, <c>false</c> if channels should be unselected.</param>
+        public void OnChannelSelection(bool isSelected)
+        {
+            foreach (var channelMetadataViewModel in Channels)
+            {
+                channelMetadataViewModel.IsChecked = isSelected;
+            }
         }
 
         /// <summary>
@@ -93,6 +151,41 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         /// </summary>
         /// <value>The collection of ETP protocols.</value>
         public BindableCollection<EtpProtocolItem> EtpProtocols { get; }
+
+        public BindableCollection<Parameters> ParamList { get; }
+
+        public bool IsRangeRequest { get; set; }
+
+        public bool IsRandomChannel { get; set; }
+
+        /// <summary>
+        /// Adds the URI to the collection of URIs.
+        /// </summary>
+        public void AddUri()
+        {
+            var uri = Model.Streaming.Uri;
+
+            if (string.IsNullOrWhiteSpace(uri) || Model.Streaming.Uris.Contains(uri))
+                return;
+
+            Model.Streaming.Uris.Add(uri);
+            Model.Streaming.Uri = string.Empty;
+        }
+
+        /// <summary>
+        /// Handles the KeyUp event for the ListBox control.
+        /// </summary>
+        /// <param name="control">The control.</param>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+        public void OnKeyUp(ListBox control, KeyEventArgs e)
+        {
+            var index = control.SelectedIndex;
+
+            if (e.Key == Key.Delete && index > -1)
+            {
+                Model.Streaming.Uris.RemoveAt(index);
+            }
+        }
 
         private bool _canRequestSession;
 
@@ -245,15 +338,165 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.ViewModels
         }
 
         /// <summary>
+        /// Requests channel metadata for the collection of URIs.
+        /// </summary>
+        public void Describe()
+        {
+            if (Parent.Session == null)
+            {
+                return;
+            }
+
+            //Channels.Clear();
+            //ChannelStreamingInfos.Clear();
+
+            // Verify streaming start value is not scaled
+
+
+            Parent.EtpExtender.Register(
+                onChannelMetadata: OnChannelMetadata,
+                onChannelData: OnChannelData);
+
+            Channels.Clear();
+
+            Parent.EtpExtender.ChannelDescribe(Model.Streaming.Uris);
+        }
+
+        public void OnChannelMetadata(IMessageHeader header, IList<IChannelMetadataRecord> channels)
+        {
+            if (!channels.Any())
+            {
+                Parent.Details.Append(Environment.NewLine + "// No channels were described");
+                return;
+            }
+
+            // add to channel metadata collection
+            channels.ForEach(x =>
+            {
+                if (Channels.Any(c => c.Record.ChannelUri.EqualsIgnoreCase(x.ChannelUri)))
+                    return;
+
+                Channels.Add(new ChannelMetadataViewModel(x));
+            });
+        }
+
+        public void OnChannelData(IMessageHeader header, IList<IDataItem> channelData)
+        {
+        }
+
+        /// <summary>
+        /// Add Data Parameter Row
+        /// </summary>
+        public void AddRow()
+        {
+            ParamList.Add(new Parameters());
+        }
+
+        /// <summary>
+        /// Delete Data Parameter Row
+        /// </summary>
+        public void DeleteRow()
+        {
+            ParamList.RemoveAt(ParamList.Count - 1);
+        }
+
+        /// <summary>
+        /// Sets the type of channel streaming.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        public void SetStreamingType(string type)
+        {
+            Model.Streaming.StreamingType = type;
+        }
+        private object GetStreamingStartValue(bool isRangeRequest = false, int scale = 4)
+        {
+            if (isRangeRequest && !"TimeIndex".EqualsIgnoreCase(Model.Streaming.StreamingType) && !"DepthIndex".EqualsIgnoreCase(Model.Streaming.StreamingType))
+                return default(long);
+            if ("LatestValue".EqualsIgnoreCase(Model.Streaming.StreamingType))
+                return null;
+            else if ("IndexCount".EqualsIgnoreCase(Model.Streaming.StreamingType))
+                return Model.Streaming.IndexCount;
+
+            var isTimeIndex = "TimeIndex".EqualsIgnoreCase(Model.Streaming.StreamingType);
+
+            var startIndex = isTimeIndex
+                ? new DateTimeOffset(Model.Streaming.StartTime).ToUnixTimeMicroseconds()
+                : Model.Streaming.StartIndex.IndexToScale(scale);
+
+            return startIndex;
+        }
+
+        private object GetStreamingEndValue(int scale = 4)
+        {
+            var isTimeIndex = "TimeIndex".EqualsIgnoreCase(Model.Streaming.StreamingType);
+
+            if ("LatestValue".EqualsIgnoreCase(Model.Streaming.StreamingType) ||
+                "IndexCount".EqualsIgnoreCase(Model.Streaming.StreamingType) ||
+                (isTimeIndex && !Model.Streaming.EndTime.HasValue) ||
+                (!isTimeIndex && !Model.Streaming.EndIndex.HasValue))
+                return default(long);
+
+            var endIndex = isTimeIndex
+                ? new DateTimeOffset(Model.Streaming.EndTime.Value).ToUnixTimeMicroseconds()
+                : ((double)Model.Streaming.EndIndex).IndexToScale(scale);
+
+            return endIndex;
+        }
+
+        /// <summary>
         /// Save Inputs for Connection to File
         /// </summary>
         public void SaveInputs()
         {
+            var outputPath = Parent.GetOutputFilePath();
+            List<Parameters> paramList = ParamList
+                .GroupBy(p => p.SelectedName)
+                .Select(g => g.Last())
+                .ToList();
+            var dialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select a folder or just click OK to Save Inputs to default folder",
+                SelectedPath = outputPath,
+                ShowNewFolderButton = true
+            };
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                outputPath = dialog.SelectedPath;
+            }
+            else
+            {
+                return;
+            }
+
             Model.RequestedProtocols.Clear();
             Model.RequestedProtocols.AddRange(EtpProtocols.Where(x => x.IsSelected));
-            JsonHelper.WriteToJsonFile(Parent.GetOutputFilePath() + "\\protocols.json",Model.RequestedProtocols, true);
-            Parent.WriteConnectionInfo();
-            MessageBox.Show("Save info successfully to" + Parent.GetOutputFilePath());
+
+            var channels = Channels
+                .Where(c => c.IsChecked)
+                .Select(x => x.Record.ChannelId)
+                .ToArray();
+
+            JsonHelper.WriteToJsonFile(outputPath + "\\protocols.json",Model.RequestedProtocols);
+            Parent.WriteConnectionInfo(outputPath);
+            JsonHelper.WriteToJsonFile(outputPath + "\\testcaseParams.json", paramList);
+            JsonHelper.WriteToJsonFile(outputPath + "\\uris.json", Model.Streaming.Uris);
+            JsonHelper.WriteToJsonFile(outputPath + "\\isRangeRequest.json", IsRangeRequest);
+            JsonHelper.WriteToJsonFile(outputPath + "\\startIndex.json", GetStreamingStartValue(false));
+
+            if (IsRangeRequest)
+            {
+                JsonHelper.WriteToJsonFile(outputPath + "\\endIndex.json", GetStreamingEndValue());
+            }
+
+            if (IsRandomChannel)
+            {
+                JsonHelper.WriteToJsonFile(outputPath + "\\isRandomChannel.json", IsRandomChannel);
+            } else
+            {
+                JsonHelper.WriteToJsonFile(outputPath + "\\channels.json", channels);
+            }
+
+            MessageBox.Show("Save info successfully to " + outputPath);
         }
 
         /// <summary>

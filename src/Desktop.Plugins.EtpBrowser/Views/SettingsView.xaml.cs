@@ -16,7 +16,11 @@
 // limitations under the License.
 //-----------------------------------------------------------------------
 
+using PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.Models;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using static System.Windows.Forms.AxHost;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.Views
 {
@@ -25,6 +29,7 @@ namespace PDS.WITSMLstudio.Desktop.Plugins.EtpBrowser.Views
     /// </summary>
     public partial class SettingsView : UserControl
     {
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsView"/> class.
         /// </summary>
